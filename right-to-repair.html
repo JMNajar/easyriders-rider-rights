@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Right to Repair — Easyriders Rider Rights Intelligence Center</title>
+  <style>
+    :root {
+      --black: #0A0A0A; --card-bg: #141414; --card-border: #222222;
+      --orange: #FF6600; --orange-dim: #CC5200; --cream: #F5EDD8;
+      --gold: #E8A020; --red-alert: #CC2200; --white: #FFFFFF;
+      --muted: #888888; --muted-dim: #555555; --active-green: #22CC66;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--black); color: var(--cream); font-family: 'Georgia', serif; line-height: 1.5; }
+    header { background: #0A0A0A; border-bottom: 2px solid var(--orange); padding: 0 2rem; }
+    .header-top { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0 0.5rem; }
+    .site-title .label { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--orange); text-transform: uppercase; font-family: 'Arial', sans-serif; }
+    .site-title h1 { font-size: 1.5rem; color: var(--white); font-weight: bold; }
+    .site-title h1 span { color: var(--orange); }
+    .header-badge { display: flex; align-items: center; gap: 0.5rem; background: #1A0A00; border: 1px solid var(--orange-dim); border-radius: 4px; padding: 0.4rem 0.8rem; }
+    .header-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--active-green); animation: pulse 2s infinite; }
+    .header-badge span { font-size: 0.7rem; letter-spacing: 0.12em; color: var(--orange); text-transform: uppercase; font-family: 'Arial', sans-serif; }
+    nav { display: flex; gap: 0; overflow-x: auto; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; font-family: 'Arial', sans-serif; padding: 0.6rem 1rem; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
+    nav a:hover, nav a.active { color: var(--orange); border-bottom-color: var(--orange); }
+    .page-hero { background: linear-gradient(180deg, #1A0A00 0%, #0A0A0A 100%); border-bottom: 1px solid var(--card-border); padding: 2rem; }
+    .page-hero .breadcrumb { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-family: 'Arial', sans-serif; margin-bottom: 0.5rem; }
+    .page-hero .breadcrumb span { color: var(--orange); }
+    .page-hero h2 { font-size: 1.5rem; color: var(--white); margin-bottom: 0.4rem; }
+    .page-hero p { font-size: 0.85rem; color: var(--muted); font-family: 'Arial', sans-serif; max-width: 640px; }
+    main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+    .section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1rem; margin-top: 2rem; }
+    .section-header h2 { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); font-family: 'Arial', sans-serif; }
+    .section-header .rule { flex: 1; height: 1px; background: var(--card-border); }
+    .section-header .count { font-size: 0.7rem; color: var(--muted); font-family: 'Arial', sans-serif; }
+
+    .stat-strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 6px; padding: 1.2rem; }
+    .stat-card .num { font-size: 2rem; font-weight: bold; color: var(--orange); line-height: 1; }
+    .stat-card .lbl { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-family: 'Arial', sans-serif; margin-top: 0.3rem; }
+
+    .bill-spotlight { background: var(--card-bg); border: 1px solid var(--card-border); border-left: 4px solid var(--orange); border-radius: 6px; padding: 1.5rem; margin-bottom: 2rem; }
+    .bill-spotlight .bs-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
+    .bill-spotlight .bs-id { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange); font-family: 'Arial', sans-serif; }
+    .bill-spotlight h3 { font-size: 1.1rem; color: var(--white); margin: 0.2rem 0; }
+    .bill-spotlight .bs-sub { font-size: 0.78rem; color: var(--muted); font-family: 'Arial', sans-serif; }
+    .bill-meta { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .bill-meta-item { font-size: 0.75rem; font-family: 'Arial', sans-serif; }
+    .bill-meta-item .lbl { color: var(--muted-dim); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; }
+    .bill-meta-item .val { color: var(--cream); }
+    .bill-text { font-size: 0.82rem; color: var(--muted); font-family: 'Arial', sans-serif; line-height: 1.8; margin-bottom: 1rem; }
+    .rider-briefing { background: #0D0D0D; border: 1px solid var(--card-border); border-radius: 4px; padding: 1rem; }
+    .rider-briefing .rb-label { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--orange-dim); font-family: 'Arial', sans-serif; margin-bottom: 0.6rem; }
+    .rb-row { margin-bottom: 0.4rem; font-size: 0.78rem; font-family: 'Arial', sans-serif; color: var(--muted); }
+    .rb-row strong { color: var(--cream); }
+
+    .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 3px; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; font-family: 'Arial', sans-serif; }
+    .badge.active { background: #331500; border: 1px solid var(--orange-dim); color: var(--orange); }
+    .badge.high { background: #2A0000; border: 1px solid var(--red-alert); color: var(--red-alert); }
+
+    .state-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.8rem; margin-bottom: 2rem; }
+    .state-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 5px; padding: 1rem; }
+    .state-card h4 { font-size: 0.82rem; color: var(--white); margin-bottom: 0.3rem; }
+    .state-card .sc-status { font-size: 0.7rem; color: var(--orange); font-family: 'Arial', sans-serif; margin-bottom: 0.4rem; }
+    .state-card p { font-size: 0.73rem; color: var(--muted); font-family: 'Arial', sans-serif; line-height: 1.6; }
+
+    .explainer { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 6px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .explainer h3 { font-size: 1rem; color: var(--white); margin-bottom: 0.8rem; }
+    .explainer p { font-size: 0.82rem; color: var(--muted); font-family: 'Arial', sans-serif; line-height: 1.8; margin-bottom: 0.8rem; }
+    .explainer .key-point { border-left: 3px solid var(--orange); padding-left: 1rem; margin: 1rem 0; }
+    .explainer .key-point strong { color: var(--cream); display: block; font-size: 0.85rem; margin-bottom: 0.3rem; }
+    .explainer .key-point span { font-size: 0.78rem; color: var(--muted); font-family: 'Arial', sans-serif; }
+
+    footer { border-top: 1px solid var(--card-border); padding: 2rem; text-align: center; }
+    footer p { font-size: 0.72rem; color: var(--muted-dim); font-family: 'Arial', sans-serif; }
+    footer .hpai { color: var(--muted); }
+    footer .hpai span { color: var(--orange); }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="site-title">
+      <span class="label">Easyriders Magazine</span>
+      <h1><span>Rider Rights</span> Intelligence Center</h1>
+    </div>
+    <div class="header-badge">
+      <div class="dot"></div>
+      <span>Live Intelligence</span>
+    </div>
+  </div>
+  <nav>
+    <a href="index.html">Dashboard</a>
+    <a href="motorcycle-rights.html">Motorcycle Rights</a>
+    <a href="right-to-repair.html" class="active">Right to Repair</a>
+    <a href="helmet-laws.html">Helmet Laws</a>
+    <a href="organizations.html">Organizations</a>
+    <a href="news.html">News Feed</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <div class="breadcrumb">Rider Rights Intelligence / <span>Right to Repair</span></div>
+  <h2>Right to Repair</h2>
+  <p>Your bike. Your tools. Your call. Tracking federal and state legislation that protects your right to service, repair, and modify your motorcycle — without being forced into a dealer network.</p>
+</div>
+
+<main>
+
+  <div class="section-header" style="margin-top:0;">
+    <h2>Current Status</h2>
+    <div class="rule"></div>
+  </div>
+  <div class="stat-strip">
+    <div class="stat-card"><div class="num">67</div><div class="lbl">REPAIR Act Cosponsors</div></div>
+    <div class="stat-card"><div class="num">1</div><div class="lbl">Federal Bill Active</div></div>
+    <div class="stat-card"><div class="num">9</div><div class="lbl">State Bills Tracked</div></div>
+    <div class="stat-card"><div class="num">MA</div><div class="lbl">Most Advanced State Law</div></div>
+  </div>
+
+  <div class="section-header">
+    <h2>Federal Spotlight — The REPAIR Act</h2>
+    <div class="rule"></div>
+  </div>
+  <div class="bill-spotlight">
+    <div class="bs-header">
+      <div>
+        <div class="bs-id">H.R. 906 — 119th Congress</div>
+        <h3>Right to Equitable and Professional Auto Industry Repair Act</h3>
+        <div class="bs-sub">Sponsor: Rep. Neal Dunn (R-FL) | Introduced: January 28, 2025</div>
+      </div>
+      <span class="badge active">Active — In Committee</span>
+    </div>
+    <div class="bill-meta">
+      <div class="bill-meta-item"><div class="lbl">Committee</div><div class="val">House Energy &amp; Commerce</div></div>
+      <div class="bill-meta-item"><div class="lbl">Cosponsors</div><div class="val">67 (bipartisan)</div></div>
+      <div class="bill-meta-item"><div class="lbl">Rider Impact</div><div class="val"><span class="badge high">HIGH</span></div></div>
+      <div class="bill-meta-item"><div class="lbl">Status</div><div class="val">Referred to committee — hearings expected Q2–Q3 2026</div></div>
+    </div>
+    <div class="bill-text">
+      The REPAIR Act requires manufacturers of motor vehicles — including motorcycles and powersports vehicles — to share telematics data, repair information, and diagnostic tools with independent repair shops and vehicle owners on fair and reasonable terms. It directly counters OEM strategies of locking repair capabilities behind proprietary systems, dealer networks, and software locks.
+    </div>
+    <div class="rider-briefing">
+      <div class="rb-label">Rider Briefing — What This Means for You</div>
+      <div class="rb-row"><strong>IMPACT</strong> — If passed, your dealer can no longer be the only place that can diagnose your bike. Independent shops get the same data access as OEM dealers — same tools, same codes, same telematics.</div>
+      <div class="rb-row"><strong>TIMELINE</strong> — Committee hearing expected Q2–Q3 2026. Manufacturer lobby spending is up significantly this quarter — this bill has real opposition.</div>
+      <div class="rb-row"><strong>ACTION</strong> — Find your rep at house.gov and ask them to cosponsor H.R. 906. The AMA has a form letter at amacycle.org/repair.</div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>State-Level Right to Repair</h2>
+    <div class="rule"></div>
+    <span class="count">Key states</span>
+  </div>
+  <div class="state-grid">
+    <div class="state-card">
+      <h4>Massachusetts</h4>
+      <div class="sc-status">Law Enacted — Most Advanced</div>
+      <p>2020 auto right-to-repair law passed by ballot initiative. Manufacturers legally challenged it; federal court upheld the law in 2026. Sets the national template.</p>
+    </div>
+    <div class="state-card">
+      <h4>Colorado</h4>
+      <div class="sc-status">Electronics R2R Law — 2023</div>
+      <p>Passed electronics right-to-repair in 2023. Motor vehicle legislation separate — not yet enacted. Sets a precedent for powersports legislation.</p>
+    </div>
+    <div class="state-card">
+      <h4>Minnesota</h4>
+      <div class="sc-status">Electronics R2R Law — 2023</div>
+      <p>Digital fair repair act signed in 2023. Motor vehicle bills introduced but not yet advanced. Motorcycle-specific provisions under discussion.</p>
+    </div>
+    <div class="state-card">
+      <h4>New York</h4>
+      <div class="sc-status">Electronics R2R Law — 2022</div>
+      <p>Fair Repair Act for electronics passed in 2022. Efforts to extend to motor vehicles and powersports ongoing in the state legislature.</p>
+    </div>
+    <div class="state-card">
+      <h4>California</h4>
+      <div class="sc-status">Bill in Legislature</div>
+      <p>Multiple right-to-repair bills introduced covering electronics and vehicles. Given California's vehicle market size, passage would have outsized national impact.</p>
+    </div>
+    <div class="state-card">
+      <h4>Texas</h4>
+      <div class="sc-status">No State Law — Federal Bill Key</div>
+      <p>No state right-to-repair law. Texas riders depend on the federal REPAIR Act. Texas congressional delegation includes several committee members with influence over H.R. 906.</p>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>The Issue Explained</h2>
+    <div class="rule"></div>
+  </div>
+
+  <div class="explainer">
+    <h3>What "Right to Repair" Means for Motorcycles</h3>
+    <p>Modern motorcycles are increasingly software-driven. Engine management, ABS systems, traction control, ride modes, and now telematics are all controlled by proprietary software that only OEM-authorized dealers can access and modify. When your bike needs service or a diagnostic readout, many riders are finding that their only legal option is the dealer — at dealer prices, on dealer timelines.</p>
+    <div class="key-point">
+      <strong>The Telematics Problem</strong>
+      <span>Newer bikes transmit diagnostic data wirelessly. Manufacturers are using this capability to lock out independent shops — not because independent shops lack the skill, but because the data stream is encrypted and proprietary. The REPAIR Act would require manufacturers to make this data available to anyone who asks, on reasonable terms.</span>
+    </div>
+    <div class="key-point">
+      <strong>What Manufacturers Argue</strong>
+      <span>OEMs claim that open repair data creates cybersecurity risks and enables intellectual property theft. They also argue that independent shops may not maintain their vehicles to safety standards without OEM oversight. The AMA and MRF dispute both claims, pointing to independent shops' long safety record and the cybersecurity frameworks already used by aftermarket tool manufacturers.</span>
+    </div>
+    <div class="key-point">
+      <strong>The Massachusetts Precedent</strong>
+      <span>Massachusetts voters passed a ballot initiative requiring manufacturers to provide telematics access in 2020. Manufacturers sued, claiming federal preemption. A federal district court upheld the law in 2026 — clearing the strongest legal obstacle to state and federal right-to-repair legislation nationwide.</span>
+    </div>
+    <div class="key-point">
+      <strong>What Riders Can Do Now</strong>
+      <span>Support the REPAIR Act via your federal representative. Buy from independent shops where possible — demonstrating the market demand for independent service. If you're mechanically inclined, document and share instances where OEM data lockout prevented you from servicing your own bike.</span>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>Easyriders Rider Rights Intelligence Center | Data from Congress.gov, AMA, iFixit, state legislature feeds. Updated weekly.</p>
+  <p class="hpai">Built by <span>Horsepower AI</span> | Jeffrey Najar</p>
+</footer>
+
+</body>
+</html>

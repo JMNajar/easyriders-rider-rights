@@ -1,0 +1,53 @@
+name: Update Rider Rights Data
+
+on:
+  schedule:
+    # Daily at 6am ET (10am UTC)
+    - cron: '0 10 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Fetch news and generate briefings
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/fetch_news.py
+
+      - name: Update federal bill status
+        env:
+          CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }}
+        run: python scripts/fetch_bills.py
+        # Runs weekly on Mondays only — others get skipped gracefully
+        if: ${{ github.event_name == 'workflow_dispatch' || startsWith(github.event.schedule, '0 10 * * 1') }}
+
+      - name: Update dashboard signals
+        run: python scripts/update_status.py
+
+      - name: Commit updated data
+        run: |
+          git config user.name "Rider Rights Bot"
+          git config user.email "bot@horsepowerai.com"
+          git add data/
+          git diff --staged --quiet || git commit -m "chore: daily data update $(date -u +%Y-%m-%d)"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.8.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main

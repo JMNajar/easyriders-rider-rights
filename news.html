@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News Feed — Easyriders Rider Rights Intelligence Center</title>
+  <style>
+    :root {
+      --black: #0A0A0A; --card-bg: #141414; --card-border: #222222;
+      --orange: #FF6600; --orange-dim: #CC5200; --cream: #F5EDD8;
+      --gold: #E8A020; --red-alert: #CC2200; --white: #FFFFFF;
+      --muted: #888888; --muted-dim: #555555; --active-green: #22CC66;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--black); color: var(--cream); font-family: 'Georgia', serif; line-height: 1.5; }
+    header { background: #0A0A0A; border-bottom: 2px solid var(--orange); padding: 0 2rem; }
+    .header-top { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0 0.5rem; }
+    .site-title .label { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--orange); text-transform: uppercase; font-family: 'Arial', sans-serif; }
+    .site-title h1 { font-size: 1.5rem; color: var(--white); font-weight: bold; }
+    .site-title h1 span { color: var(--orange); }
+    .header-badge { display: flex; align-items: center; gap: 0.5rem; background: #1A0A00; border: 1px solid var(--orange-dim); border-radius: 4px; padding: 0.4rem 0.8rem; }
+    .header-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--active-green); animation: pulse 2s infinite; }
+    .header-badge span { font-size: 0.7rem; letter-spacing: 0.12em; color: var(--orange); text-transform: uppercase; font-family: 'Arial', sans-serif; }
+    nav { display: flex; gap: 0; overflow-x: auto; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; font-family: 'Arial', sans-serif; padding: 0.6rem 1rem; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
+    nav a:hover, nav a.active { color: var(--orange); border-bottom-color: var(--orange); }
+    .page-hero { background: linear-gradient(180deg, #1A0A00 0%, #0A0A0A 100%); border-bottom: 1px solid var(--card-border); padding: 2rem; }
+    .page-hero .breadcrumb { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-family: 'Arial', sans-serif; margin-bottom: 0.5rem; }
+    .page-hero .breadcrumb span { color: var(--orange); }
+    .page-hero h2 { font-size: 1.5rem; color: var(--white); margin-bottom: 0.4rem; }
+    .page-hero p { font-size: 0.85rem; color: var(--muted); font-family: 'Arial', sans-serif; max-width: 640px; }
+    main { max-width: 1000px; margin: 0 auto; padding: 2rem; }
+    .section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1rem; }
+    .section-header h2 { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); font-family: 'Arial', sans-serif; }
+    .section-header .rule { flex: 1; height: 1px; background: var(--card-border); }
+    .section-header .count { font-size: 0.7rem; color: var(--muted); font-family: 'Arial', sans-serif; }
+
+    .filter-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.2rem; align-items: center; }
+    .filter-bar label { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted-dim); font-family: 'Arial', sans-serif; }
+    .filter-btn { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 3px; padding: 0.3rem 0.7rem; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-family: 'Arial', sans-serif; cursor: pointer; transition: all 0.15s; }
+    .filter-btn:hover, .filter-btn.active { background: var(--orange); border-color: var(--orange); color: var(--black); }
+
+    .news-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 6px; padding: 1.3rem; margin-bottom: 1rem; transition: border-color 0.2s; }
+    .news-card:hover { border-color: var(--orange-dim); }
+    .news-meta { display: flex; gap: 0.8rem; align-items: center; margin-bottom: 0.6rem; flex-wrap: wrap; }
+    .news-source { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange); font-family: 'Arial', sans-serif; }
+    .news-date { font-size: 0.65rem; color: var(--muted-dim); font-family: 'Arial', sans-serif; }
+    .news-area-tag { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; background: #1A1A1A; border: 1px solid var(--card-border); border-radius: 3px; padding: 0.1rem 0.4rem; color: var(--muted); font-family: 'Arial', sans-serif; }
+    .news-title { font-size: 0.92rem; color: var(--white); margin-bottom: 0.4rem; font-weight: bold; }
+    .news-summary { font-size: 0.8rem; color: var(--muted); font-family: 'Arial', sans-serif; line-height: 1.7; margin-bottom: 0.8rem; }
+    .briefing-box { background: #0D0D0D; border: 1px solid var(--card-border); border-radius: 4px; padding: 0.9rem; }
+    .briefing-box .b-label { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--orange-dim); font-family: 'Arial', sans-serif; margin-bottom: 0.5rem; }
+    .briefing-row { margin-bottom: 0.35rem; font-size: 0.77rem; font-family: 'Arial', sans-serif; color: var(--muted); }
+    .briefing-row strong { color: var(--cream); }
+    .update-note { font-size: 0.72rem; color: var(--muted-dim); font-family: 'Arial', sans-serif; font-style: italic; margin-bottom: 1.5rem; }
+
+    footer { border-top: 1px solid var(--card-border); padding: 2rem; text-align: center; }
+    footer p { font-size: 0.72rem; color: var(--muted-dim); font-family: 'Arial', sans-serif; }
+    footer .hpai { color: var(--muted); }
+    footer .hpai span { color: var(--orange); }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="site-title">
+      <span class="label">Easyriders Magazine</span>
+      <h1><span>Rider Rights</span> Intelligence Center</h1>
+    </div>
+    <div class="header-badge">
+      <div class="dot"></div>
+      <span>Live Intelligence</span>
+    </div>
+  </div>
+  <nav>
+    <a href="index.html">Dashboard</a>
+    <a href="motorcycle-rights.html">Motorcycle Rights</a>
+    <a href="right-to-repair.html">Right to Repair</a>
+    <a href="helmet-laws.html">Helmet Laws</a>
+    <a href="organizations.html">Organizations</a>
+    <a href="news.html" class="active">News Feed</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <div class="breadcrumb">Rider Rights Intelligence / <span>News Feed</span></div>
+  <h2>Rider Rights News Feed</h2>
+  <p>Curated daily from AMA, MRF, Cycle World, Cycle News, Motorcycle.com, and major news outlets. Every story analyzed for rider impact.</p>
+</div>
+
+<main>
+  <div class="section-header">
+    <h2>Latest Stories</h2>
+    <div class="rule"></div>
+    <span class="count" id="news-count"></span>
+  </div>
+  <p class="update-note" id="update-note">Updated daily at 6am ET via automated feed. Last verified: loading…</p>
+  <div class="filter-bar">
+    <label>Filter:</label>
+    <button class="filter-btn active" onclick="filterNews('all', this)">All Stories</button>
+    <button class="filter-btn" onclick="filterNews('motorcycle-rights', this)">Motorcycle Rights</button>
+    <button class="filter-btn" onclick="filterNews('right-to-repair', this)">Right to Repair</button>
+    <button class="filter-btn" onclick="filterNews('helmet-laws', this)">Helmet Laws</button>
+  </div>
+  <div id="news-feed">
+    <div style="color:var(--muted);font-family:'Arial',sans-serif;">Loading news feed…</div>
+  </div>
+</main>
+
+<footer>
+  <p>Easyriders Rider Rights Intelligence Center | News sourced from public RSS feeds and AMA/MRF outlets. Updated daily. Stories represent source reporting, not Easyriders editorial positions.</p>
+  <p class="hpai">Built by <span>Horsepower AI</span> | Jeffrey Najar</p>
+</footer>
+
+<script>
+  let allArticles = [];
+  const areaLabels = {
+    'motorcycle-rights': 'Motorcycle Rights',
+    'right-to-repair': 'Right to Repair',
+    'helmet-laws': 'Helmet Laws'
+  };
+
+  async function loadNews() {
+    try {
+      const res = await fetch('data/news.json');
+      const data = await res.json();
+      allArticles = data.articles;
+      const d = new Date(data.last_updated);
+      document.getElementById('update-note').textContent =
+        `Updated daily at 6am ET via automated feed. Last verified: ${d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`;
+      document.getElementById('news-count').textContent = `${allArticles.length} stories`;
+      renderNews('all');
+    } catch(e) {
+      document.getElementById('news-feed').innerHTML = '<div style="color:var(--muted-dim);font-family:Arial,sans-serif;">News feed temporarily unavailable.</div>';
+    }
+  }
+
+  function renderNews(filter) {
+    const feed = document.getElementById('news-feed');
+    const articles = filter === 'all' ? allArticles : allArticles.filter(a => a.issue_area === filter);
+    if (!articles.length) {
+      feed.innerHTML = '<div style="color:var(--muted);font-family:Arial,sans-serif;padding:1rem 0;">No stories in this category.</div>';
+      return;
+    }
+    feed.innerHTML = articles.map(a => `
+      <div class="news-card" data-area="${a.issue_area}">
+        <div class="news-meta">
+          <span class="news-source">${a.source}</span>
+          <span class="news-date">${a.date}</span>
+          <span class="news-area-tag">${areaLabels[a.issue_area] || a.issue_area}</span>
+        </div>
+        <div class="news-title">${a.title}</div>
+        <div class="news-summary">${a.summary}</div>
+        ${a.briefing ? `
+        <div class="briefing-box">
+          <div class="b-label">Rider Briefing</div>
+          <div class="briefing-row"><strong>IMPACT</strong> — ${a.briefing.impact}</div>
+          <div class="briefing-row"><strong>TIMELINE</strong> — ${a.briefing.timeline}</div>
+          <div class="briefing-row"><strong>ACTION</strong> — ${a.briefing.action}</div>
+        </div>` : ''}
+      </div>
+    `).join('');
+  }
+
+  function filterNews(area, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderNews(area);
+  }
+
+  loadNews();
+</script>
+
+</body>
+</html>

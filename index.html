@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Easyriders Rider Rights Intelligence Center</title>
+  <style>
+    :root {
+      --black: #0A0A0A;
+      --card-bg: #141414;
+      --card-border: #222222;
+      --orange: #FF6600;
+      --orange-dim: #CC5200;
+      --cream: #F5EDD8;
+      --gold: #E8A020;
+      --red-alert: #CC2200;
+      --white: #FFFFFF;
+      --muted: #888888;
+      --muted-dim: #555555;
+      --active-green: #22CC66;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--black); color: var(--cream); font-family: 'Georgia', serif; line-height: 1.5; }
+
+    /* ── HEADER ── */
+    header {
+      background: #0A0A0A;
+      border-bottom: 2px solid var(--orange);
+      padding: 0 2rem;
+    }
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0 0.5rem;
+    }
+    .site-title {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+    .site-title .label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--orange);
+      text-transform: uppercase;
+      font-family: 'Arial', sans-serif;
+    }
+    .site-title h1 {
+      font-size: 1.5rem;
+      color: var(--white);
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+    .site-title h1 span { color: var(--orange); }
+    .header-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #1A0A00;
+      border: 1px solid var(--orange-dim);
+      border-radius: 4px;
+      padding: 0.4rem 0.8rem;
+    }
+    .header-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--active-green); animation: pulse 2s infinite; }
+    .header-badge span { font-size: 0.7rem; letter-spacing: 0.12em; color: var(--orange); text-transform: uppercase; font-family: 'Arial', sans-serif; }
+
+    nav {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      padding-bottom: 0;
+    }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-family: 'Arial', sans-serif;
+      padding: 0.6rem 1rem;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    nav a:hover, nav a.active {
+      color: var(--orange);
+      border-bottom-color: var(--orange);
+    }
+
+    /* ── HERO METRICS ── */
+    .hero {
+      background: linear-gradient(180deg, #1A0A00 0%, #0A0A0A 100%);
+      border-bottom: 1px solid var(--card-border);
+      padding: 2rem;
+    }
+    .hero-intro {
+      max-width: 700px;
+      margin-bottom: 1.5rem;
+    }
+    .hero-intro h2 {
+      font-size: 1.1rem;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+    .hero-intro p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-family: 'Arial', sans-serif;
+    }
+    .metrics-bar {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .metric {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+    .metric .value {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: var(--orange);
+      line-height: 1;
+    }
+    .metric .label {
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-family: 'Arial', sans-serif;
+    }
+    .sources-bar {
+      margin-top: 1.2rem;
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .sources-bar .src-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      color: var(--muted-dim);
+      text-transform: uppercase;
+      font-family: 'Arial', sans-serif;
+    }
+    .source-chip {
+      background: #1A1A1A;
+      border: 1px solid var(--card-border);
+      border-radius: 3px;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.7rem;
+      color: var(--muted);
+      font-family: 'Arial', sans-serif;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── MAIN LAYOUT ── */
+    main { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+
+    /* ── SECTION HEADERS ── */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .section-header h2 {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--orange);
+      font-family: 'Arial', sans-serif;
+    }
+    .section-header .rule {
+      flex: 1;
+      height: 1px;
+      background: var(--card-border);
+    }
+    .section-header .count {
+      font-size: 0.7rem;
+      color: var(--muted);
+      font-family: 'Arial', sans-serif;
+    }
+
+    /* ── SIGNAL CARDS ── */
+    .signals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .signal-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      padding: 1.2rem;
+      transition: border-color 0.2s;
+    }
+    .signal-card:hover { border-color: var(--orange-dim); }
+    .signal-card.active { border-left: 3px solid var(--orange); }
+    .signal-card.moving { border-left: 3px solid var(--gold); }
+    .signal-card.watch { border-left: 3px solid var(--red-alert); }
+    .signal-card.quiet { border-left: 3px solid var(--muted-dim); }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.8rem;
+    }
+    .card-title { font-size: 0.9rem; color: var(--white); font-weight: bold; }
+    .card-subtitle { font-size: 0.7rem; color: var(--muted); font-family: 'Arial', sans-serif; margin-top: 0.1rem; }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: #1A1A1A;
+      border-radius: 3px;
+      padding: 0.2rem 0.5rem;
+      white-space: nowrap;
+    }
+    .status-badge .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .status-badge .dot.active { background: var(--orange); animation: pulse 2s infinite; }
+    .status-badge .dot.moving { background: var(--gold); animation: pulse 1.5s infinite; }
+    .status-badge .dot.watch { background: var(--red-alert); animation: pulse 1s infinite; }
+    .status-badge .dot.quiet { background: var(--muted-dim); }
+    .status-badge span { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; font-family: 'Arial', sans-serif; color: var(--muted); }
+
+    .card-headline {
+      font-size: 0.8rem;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+      font-family: 'Arial', sans-serif;
+    }
+    .card-detail {
+      font-size: 0.73rem;
+      color: var(--muted);
+      font-family: 'Arial', sans-serif;
+      line-height: 1.6;
+    }
+    .card-tag {
+      display: inline-block;
+      margin-top: 0.8rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--orange-dim);
+      font-family: 'Arial', sans-serif;
+    }
+
+    /* ── WEEK IN REVIEW ── */
+    .week-review {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .week-review .wir-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .week-review .wir-count {
+      background: var(--orange);
+      color: var(--black);
+      font-size: 0.7rem;
+      font-weight: bold;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: 'Arial', sans-serif;
+      padding: 0.2rem 0.6rem;
+      border-radius: 3px;
+    }
+    .week-review h3 { font-size: 0.85rem; color: var(--white); }
+    .wir-items { display: flex; flex-direction: column; gap: 0.7rem; }
+    .wir-item {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 1rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .wir-item:last-child { border-bottom: none; }
+    .wir-bill { font-size: 0.78rem; color: var(--orange); font-family: 'Arial', sans-serif; font-weight: bold; }
+    .wir-update { font-size: 0.78rem; color: var(--muted); font-family: 'Arial', sans-serif; }
+
+    /* ── NEWS FEED ── */
+    .news-layout { display: grid; grid-template-columns: 1fr 320px; gap: 2rem; margin-bottom: 2.5rem; }
+    @media (max-width: 900px) { .news-layout { grid-template-columns: 1fr; } }
+
+    .news-feed { display: flex; flex-direction: column; gap: 1rem; }
+    .news-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      padding: 1.2rem;
+      transition: border-color 0.2s;
+    }
+    .news-card:hover { border-color: var(--orange-dim); }
+    .news-meta {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .news-source {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--orange);
+      font-family: 'Arial', sans-serif;
+    }
+    .news-date { font-size: 0.65rem; color: var(--muted-dim); font-family: 'Arial', sans-serif; }
+    .news-area-tag {
+      margin-left: auto;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: #1A1A1A;
+      border: 1px solid var(--card-border);
+      border-radius: 3px;
+      padding: 0.1rem 0.4rem;
+      color: var(--muted);
+      font-family: 'Arial', sans-serif;
+    }
+    .news-title { font-size: 0.88rem; color: var(--white); margin-bottom: 0.4rem; font-weight: bold; }
+    .news-summary { font-size: 0.78rem; color: var(--muted); font-family: 'Arial', sans-serif; line-height: 1.6; margin-bottom: 0.8rem; }
+    .briefing-box {
+      background: #0D0D0D;
+      border: 1px solid var(--card-border);
+      border-radius: 4px;
+      padding: 0.8rem;
+    }
+    .briefing-box .b-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--orange-dim);
+      font-family: 'Arial', sans-serif;
+      margin-bottom: 0.5rem;
+    }
+    .briefing-row { margin-bottom: 0.35rem; font-size: 0.75rem; font-family: 'Arial', sans-serif; color: var(--muted); }
+    .briefing-row strong { color: var(--cream); }
+
+    /* ── SIDEBAR ── */
+    .sidebar { display: flex; flex-direction: column; gap: 1rem; }
+    .sidebar-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      padding: 1.2rem;
+    }
+    .sidebar-card h4 {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--orange);
+      font-family: 'Arial', sans-serif;
+      margin-bottom: 0.8rem;
+    }
+    .org-item { margin-bottom: 0.8rem; }
+    .org-name { font-size: 0.82rem; color: var(--white); font-weight: bold; }
+    .org-abbr { font-size: 0.7rem; color: var(--muted); font-family: 'Arial', sans-serif; }
+    .org-focus { font-size: 0.72rem; color: var(--muted); font-family: 'Arial', sans-serif; margin-top: 0.2rem; }
+
+    .helmet-quick { display: flex; flex-direction: column; gap: 0.5rem; }
+    .helmet-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid var(--card-border);
+      font-family: 'Arial', sans-serif;
+      font-size: 0.78rem;
+    }
+    .helmet-row:last-child { border-bottom: none; }
+    .helmet-count { font-size: 1.1rem; font-weight: bold; }
+    .helmet-count.universal { color: var(--red-alert); }
+    .helmet-count.partial { color: var(--gold); }
+    .helmet-count.none { color: var(--active-green); }
+    .helmet-label { color: var(--muted); font-size: 0.72rem; }
+    .helmet-cta {
+      display: block;
+      margin-top: 0.8rem;
+      text-align: center;
+      font-size: 0.72rem;
+      font-family: 'Arial', sans-serif;
+      color: var(--orange);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+    }
+    .helmet-cta:hover { text-decoration: underline; }
+
+    .filter-bar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .filter-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 3px;
+      padding: 0.3rem 0.7rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-family: 'Arial', sans-serif;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: var(--black);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 2.5rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    @media (max-width: 700px) { .footer-grid { grid-template-columns: 1fr; } }
+    .footer-brand h3 { font-size: 0.9rem; color: var(--white); margin-bottom: 0.5rem; }
+    .footer-brand h3 span { color: var(--orange); }
+    .footer-brand p { font-size: 0.78rem; color: var(--muted); font-family: 'Arial', sans-serif; line-height: 1.7; }
+    .footer-col h4 {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--orange);
+      font-family: 'Arial', sans-serif;
+      margin-bottom: 0.7rem;
+    }
+    .footer-col a, .footer-col span {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-family: 'Arial', sans-serif;
+      text-decoration: none;
+      margin-bottom: 0.3rem;
+    }
+    .footer-col a:hover { color: var(--orange); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--card-border);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .footer-bottom p { font-size: 0.7rem; color: var(--muted-dim); font-family: 'Arial', sans-serif; }
+    .footer-bottom .hpai {
+      font-size: 0.7rem;
+      color: var(--muted);
+      font-family: 'Arial', sans-serif;
+    }
+    .footer-bottom .hpai span { color: var(--orange); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ── LOADING STATE ── */
+    .loading { color: var(--muted); font-size: 0.8rem; font-family: 'Arial', sans-serif; padding: 1rem 0; }
+    .error-msg { color: var(--red-alert); font-size: 0.8rem; font-family: 'Arial', sans-serif; padding: 1rem 0; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="site-title">
+      <span class="label">Easyriders Magazine</span>
+      <h1><span>Rider Rights</span> Intelligence Center</h1>
+    </div>
+    <div class="header-badge">
+      <div class="dot"></div>
+      <span>Live Intelligence</span>
+    </div>
+  </div>
+  <nav>
+    <a href="index.html" class="active">Dashboard</a>
+    <a href="motorcycle-rights.html">Motorcycle Rights</a>
+    <a href="right-to-repair.html">Right to Repair</a>
+    <a href="helmet-laws.html">Helmet Laws</a>
+    <a href="organizations.html">Organizations</a>
+    <a href="news.html">News Feed</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="hero-intro">
+    <h2>Real-time policy intelligence for American riders.</h2>
+    <p>Tracking federal legislation, state bills, and regulatory actions that affect your right to ride, repair, and choose.</p>
+  </div>
+  <div class="metrics-bar">
+    <div class="metric"><span class="value" id="bill-count">6</span><span class="label">Bills Tracked</span></div>
+    <div class="metric"><span class="value">50</span><span class="label">States Covered</span></div>
+    <div class="metric"><span class="value">3</span><span class="label">Issue Areas</span></div>
+    <div class="metric"><span class="value">Daily</span><span class="label">Auto-Updated</span></div>
+    <div class="metric"><span class="value" id="last-verified">May 07</span><span class="label">Last Verified</span></div>
+    <div class="metric"><span class="value">Free</span><span class="label">Always</span></div>
+  </div>
+  <div class="sources-bar">
+    <span class="src-label">Verified Sources:</span>
+    <span class="source-chip">Congress.gov</span>
+    <span class="source-chip">AMA Legislative</span>
+    <span class="source-chip">State Legislatures</span>
+    <span class="source-chip">Federal Register</span>
+    <span class="source-chip">MRF.org</span>
+    <span class="source-chip">ABATE Network</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- SIGNAL CARDS -->
+  <div class="section-header">
+    <h2>Policy Signal Panel</h2>
+    <div class="rule"></div>
+    <span class="count" id="signal-count">Loading…</span>
+  </div>
+  <div class="signals-grid" id="signals-grid">
+    <div class="loading">Loading signals…</div>
+  </div>
+
+  <!-- WEEK IN REVIEW -->
+  <div class="section-header">
+    <h2>Week in Review</h2>
+    <div class="rule"></div>
+    <span class="count" id="wir-count"></span>
+  </div>
+  <div class="week-review">
+    <div class="wir-header">
+      <span class="wir-count" id="wir-badge">—</span>
+      <h3>Key Developments This Week</h3>
+    </div>
+    <div class="wir-items" id="wir-items">
+      <div class="loading">Loading…</div>
+    </div>
+  </div>
+
+  <!-- NEWS + SIDEBAR -->
+  <div class="section-header">
+    <h2>Today's Top Stories</h2>
+    <div class="rule"></div>
+    <span class="count" id="news-count"></span>
+  </div>
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterNews('all', this)">All</button>
+    <button class="filter-btn" onclick="filterNews('motorcycle-rights', this)">Motorcycle Rights</button>
+    <button class="filter-btn" onclick="filterNews('right-to-repair', this)">Right to Repair</button>
+    <button class="filter-btn" onclick="filterNews('helmet-laws', this)">Helmet Laws</button>
+  </div>
+  <div class="news-layout">
+    <div class="news-feed" id="news-feed">
+      <div class="loading">Loading news…</div>
+    </div>
+    <div class="sidebar">
+      <div class="sidebar-card">
+        <h4>Helmet Law Quick View</h4>
+        <div class="helmet-quick">
+          <div class="helmet-row">
+            <span class="helmet-label">Universal (All Riders)</span>
+            <span class="helmet-count universal">19 states</span>
+          </div>
+          <div class="helmet-row">
+            <span class="helmet-label">Partial (Age-Based)</span>
+            <span class="helmet-count partial">28 states</span>
+          </div>
+          <div class="helmet-row">
+            <span class="helmet-label">No Requirement</span>
+            <span class="helmet-count none">3 states</span>
+          </div>
+        </div>
+        <a href="helmet-laws.html" class="helmet-cta">View Full 50-State Map →</a>
+      </div>
+      <div class="sidebar-card">
+        <h4>Key Organizations</h4>
+        <div class="org-item">
+          <div class="org-name">American Motorcyclist Association</div>
+          <div class="org-abbr">AMA — amacycle.org</div>
+          <div class="org-focus">Federal + state legislation, rider rights advocacy</div>
+        </div>
+        <div class="org-item">
+          <div class="org-name">Motorcycle Riders Foundation</div>
+          <div class="org-abbr">MRF — mrf.org</div>
+          <div class="org-focus">Federal lobbying, profiling, lane filtering</div>
+        </div>
+        <div class="org-item">
+          <div class="org-name">ABATE</div>
+          <div class="org-abbr">State chapters nationwide</div>
+          <div class="org-focus">Helmet choice, state-level advocacy, rider education</div>
+        </div>
+        <a href="organizations.html" class="helmet-cta">All Organizations →</a>
+      </div>
+      <div class="sidebar-card">
+        <h4>Take Action</h4>
+        <p style="font-size:0.78rem; color:var(--muted); font-family:'Arial',sans-serif; line-height:1.7; margin-bottom:0.8rem;">
+          Find your federal and state representatives and let them know you're watching their votes on rider rights.
+        </p>
+        <a href="https://www.house.gov/representatives/find-your-representative" target="_blank" class="helmet-cta">Find Your Rep →</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h3>Easyriders <span>Rider Rights</span> Intelligence Center</h3>
+      <p>Real-time tracking of the legislation, regulations, and political forces that shape the rights of American motorcyclists. Updated daily. Always free. Built by riders, for riders.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Issue Areas</h4>
+      <a href="motorcycle-rights.html">Motorcycle Rights</a>
+      <a href="right-to-repair.html">Right to Repair</a>
+      <a href="helmet-laws.html">Helmet Laws</a>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="organizations.html">Organizations</a>
+      <a href="news.html">News Feed</a>
+      <a href="about.html">About This Program</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>Data sourced from Congress.gov, AMA, MRF, state legislature feeds, and Google News. Updated daily. Verify critical information with primary sources.</p>
+    <p class="hpai">Built by <span>Horsepower AI</span> | Jeffrey Najar</p>
+  </div>
+</footer>
+
+<script>
+  let allArticles = [];
+
+  async function loadStatus() {
+    try {
+      const res = await fetch('data/status.json');
+      const data = await res.json();
+
+      // Update last verified
+      const d = new Date(data.last_updated);
+      document.getElementById('last-verified').textContent =
+        d.toLocaleDateString('en-US', { month: 'short', day: '2-digit' });
+
+      // Render signal cards
+      const grid = document.getElementById('signals-grid');
+      document.getElementById('signal-count').textContent = `${data.signals.length} signals active`;
+      grid.innerHTML = data.signals.map(s => `
+        <div class="signal-card ${s.dot}">
+          <div class="card-top">
+            <div>
+              <div class="card-title">${s.title}</div>
+              <div class="card-subtitle">${s.subtitle}</div>
+            </div>
+            <div class="status-badge">
+              <div class="dot ${s.dot}"></div>
+              <span>${s.status}</span>
+            </div>
+          </div>
+          <div class="card-headline">${s.headline}</div>
+          <div class="card-detail">${s.detail}</div>
+          <span class="card-tag">${s.issue_area.replace(/-/g,' ')}</span>
+        </div>
+      `).join('');
+
+      // Render week in review
+      const wir = data.week_in_review;
+      document.getElementById('wir-badge').textContent = `${wir.changes} Changes`;
+      document.getElementById('wir-count').textContent = `${wir.changes} developments`;
+      document.getElementById('wir-items').innerHTML = wir.items.map(item => `
+        <div class="wir-item">
+          <div class="wir-bill">${item.bill}</div>
+          <div class="wir-update">${item.update}</div>
+        </div>
+      `).join('');
+    } catch (e) {
+      document.getElementById('signals-grid').innerHTML = '<div class="error-msg">Signal data unavailable. Check back shortly.</div>';
+    }
+  }
+
+  async function loadNews() {
+    try {
+      const res = await fetch('data/news.json');
+      const data = await res.json();
+      allArticles = data.articles;
+      document.getElementById('news-count').textContent = `${allArticles.length} stories`;
+      renderNews('all');
+    } catch (e) {
+      document.getElementById('news-feed').innerHTML = '<div class="error-msg">News feed unavailable.</div>';
+    }
+  }
+
+  async function loadBills() {
+    try {
+      const res = await fetch('data/bills.json');
+      const data = await res.json();
+      document.getElementById('bill-count').textContent = data.bills.length;
+    } catch (e) { /* use default */ }
+  }
+
+  function renderNews(filter) {
+    const feed = document.getElementById('news-feed');
+    const articles = filter === 'all'
+      ? allArticles
+      : allArticles.filter(a => a.issue_area === filter);
+
+    if (!articles.length) {
+      feed.innerHTML = '<div class="loading">No stories in this category yet.</div>';
+      return;
+    }
+
+    const areaLabels = {
+      'motorcycle-rights': 'Motorcycle Rights',
+      'right-to-repair': 'Right to Repair',
+      'helmet-laws': 'Helmet Laws'
+    };
+
+    feed.innerHTML = articles.map(a => `
+      <div class="news-card" data-area="${a.issue_area}">
+        <div class="news-meta">
+          <span class="news-source">${a.source}</span>
+          <span class="news-date">${a.date}</span>
+          <span class="news-area-tag">${areaLabels[a.issue_area] || a.issue_area}</span>
+        </div>
+        <div class="news-title">${a.title}</div>
+        <div class="news-summary">${a.summary}</div>
+        ${a.briefing ? `
+        <div class="briefing-box">
+          <div class="b-label">Rider Briefing</div>
+          <div class="briefing-row"><strong>IMPACT</strong> — ${a.briefing.impact}</div>
+          <div class="briefing-row"><strong>TIMELINE</strong> — ${a.briefing.timeline}</div>
+          <div class="briefing-row"><strong>ACTION</strong> — ${a.briefing.action}</div>
+        </div>` : ''}
+      </div>
+    `).join('');
+  }
+
+  function filterNews(area, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderNews(area);
+  }
+
+  loadStatus();
+  loadNews();
+  loadBills();
+</script>
+
+</body>
+</html>

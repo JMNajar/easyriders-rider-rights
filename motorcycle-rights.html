@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Motorcycle Rights — Easyriders Rider Rights Intelligence Center</title>
+  <style>
+    :root {
+      --black: #0A0A0A; --card-bg: #141414; --card-border: #222222;
+      --orange: #FF6600; --orange-dim: #CC5200; --cream: #F5EDD8;
+      --gold: #E8A020; --red-alert: #CC2200; --white: #FFFFFF;
+      --muted: #888888; --muted-dim: #555555; --active-green: #22CC66;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--black); color: var(--cream); font-family: 'Georgia', serif; line-height: 1.5; }
+    header { background: #0A0A0A; border-bottom: 2px solid var(--orange); padding: 0 2rem; }
+    .header-top { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0 0.5rem; }
+    .site-title .label { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--orange); text-transform: uppercase; font-family: 'Arial', sans-serif; }
+    .site-title h1 { font-size: 1.5rem; color: var(--white); font-weight: bold; }
+    .site-title h1 span { color: var(--orange); }
+    .header-badge { display: flex; align-items: center; gap: 0.5rem; background: #1A0A00; border: 1px solid var(--orange-dim); border-radius: 4px; padding: 0.4rem 0.8rem; }
+    .header-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--active-green); animation: pulse 2s infinite; }
+    .header-badge span { font-size: 0.7rem; letter-spacing: 0.12em; color: var(--orange); text-transform: uppercase; font-family: 'Arial', sans-serif; }
+    nav { display: flex; gap: 0; overflow-x: auto; padding-bottom: 0; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; font-family: 'Arial', sans-serif; padding: 0.6rem 1rem; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
+    nav a:hover, nav a.active { color: var(--orange); border-bottom-color: var(--orange); }
+    .page-hero { background: linear-gradient(180deg, #1A0A00 0%, #0A0A0A 100%); border-bottom: 1px solid var(--card-border); padding: 2rem; }
+    .page-hero .breadcrumb { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-family: 'Arial', sans-serif; margin-bottom: 0.5rem; }
+    .page-hero .breadcrumb span { color: var(--orange); }
+    .page-hero h2 { font-size: 1.5rem; color: var(--white); margin-bottom: 0.4rem; }
+    .page-hero p { font-size: 0.85rem; color: var(--muted); font-family: 'Arial', sans-serif; max-width: 600px; }
+    main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+    .section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1rem; margin-top: 2rem; }
+    .section-header h2 { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); font-family: 'Arial', sans-serif; }
+    .section-header .rule { flex: 1; height: 1px; background: var(--card-border); }
+    .section-header .count { font-size: 0.7rem; color: var(--muted); font-family: 'Arial', sans-serif; }
+
+    /* ISSUE OVERVIEW */
+    .issue-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .issue-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 6px; padding: 1.3rem; }
+    .issue-card h3 { font-size: 0.9rem; color: var(--white); margin-bottom: 0.5rem; }
+    .issue-card p { font-size: 0.78rem; color: var(--muted); font-family: 'Arial', sans-serif; line-height: 1.7; }
+    .issue-card .stat { font-size: 1.8rem; font-weight: bold; color: var(--orange); margin-bottom: 0.3rem; }
+
+    /* BILLS TABLE */
+    .bills-table-wrap { overflow-x: auto; margin-bottom: 2rem; }
+    table { width: 100%; border-collapse: collapse; font-family: 'Arial', sans-serif; }
+    th { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--orange); background: var(--card-bg); padding: 0.7rem 1rem; text-align: left; border-bottom: 2px solid var(--orange-dim); white-space: nowrap; }
+    td { font-size: 0.78rem; color: var(--cream); padding: 0.8rem 1rem; border-bottom: 1px solid var(--card-border); vertical-align: top; }
+    tr:hover td { background: #1A1A1A; }
+    .badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 3px; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .badge.active { background: #331500; border: 1px solid var(--orange-dim); color: var(--orange); }
+    .badge.moving { background: #2A1F00; border: 1px solid var(--gold); color: var(--gold); }
+    .badge.quiet { background: #1A1A1A; border: 1px solid var(--muted-dim); color: var(--muted); }
+    .badge.high { background: #2A0000; border: 1px solid var(--red-alert); color: var(--red-alert); }
+    .badge.monitor { background: #1A1A00; border: 1px solid #555500; color: #AAAA00; }
+    .bill-title { font-weight: bold; color: var(--white); }
+    .bill-id { font-size: 0.7rem; color: var(--orange); }
+    .bill-summary { font-size: 0.73rem; color: var(--muted); margin-top: 0.2rem; max-width: 350px; }
+
+    /* EXPLAINER SECTIONS */
+    .explainer { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 6px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .explainer h3 { font-size: 1rem; color: var(--white); margin-bottom: 0.8rem; }
+    .explainer p { font-size: 0.82rem; color: var(--muted); font-family: 'Arial', sans-serif; line-height: 1.8; margin-bottom: 0.8rem; }
+    .explainer .key-point { border-left: 3px solid var(--orange); padding-left: 1rem; margin: 1rem 0; }
+    .explainer .key-point strong { color: var(--cream); display: block; font-size: 0.85rem; margin-bottom: 0.3rem; }
+    .explainer .key-point span { font-size: 0.78rem; color: var(--muted); font-family: 'Arial', sans-serif; }
+
+    footer { border-top: 1px solid var(--card-border); padding: 2rem; text-align: center; }
+    footer p { font-size: 0.72rem; color: var(--muted-dim); font-family: 'Arial', sans-serif; }
+    footer .hpai { color: var(--muted); }
+    footer .hpai span { color: var(--orange); }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="site-title">
+      <span class="label">Easyriders Magazine</span>
+      <h1><span>Rider Rights</span> Intelligence Center</h1>
+    </div>
+    <div class="header-badge">
+      <div class="dot"></div>
+      <span>Live Intelligence</span>
+    </div>
+  </div>
+  <nav>
+    <a href="index.html">Dashboard</a>
+    <a href="motorcycle-rights.html" class="active">Motorcycle Rights</a>
+    <a href="right-to-repair.html">Right to Repair</a>
+    <a href="helmet-laws.html">Helmet Laws</a>
+    <a href="organizations.html">Organizations</a>
+    <a href="news.html">News Feed</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <div class="breadcrumb">Rider Rights Intelligence / <span>Motorcycle Rights</span></div>
+  <h2>Motorcycle Rights</h2>
+  <p>Tracking the federal and state legislation that defines what it means to ride in America — from profiling protections to lane filtering, HOV access, and registration rights.</p>
+</div>
+
+<main>
+
+  <div class="section-header" style="margin-top:0;">
+    <h2>At a Glance</h2>
+    <div class="rule"></div>
+  </div>
+  <div class="issue-cards">
+    <div class="issue-card">
+      <div class="stat">34</div>
+      <h3>Active State Bills</h3>
+      <p>The AMA is monitoring 34 active state-level bills in the 2026 session covering lane filtering, profiling protections, HOV access, and motorcycle-specific regulations.</p>
+    </div>
+    <div class="issue-card">
+      <div class="stat">4</div>
+      <h3>Lane Filtering States</h3>
+      <p>California, Utah, Montana, and Hawaii now permit some form of lane splitting or filtering. Nine more states have active bills this session.</p>
+    </div>
+    <div class="issue-card">
+      <div class="stat">2</div>
+      <h3>Federal Bills Active</h3>
+      <p>The Stop Motorcycle Profiling Act has companion bills in both the House (H.R. 2843) and Senate (S. 1424) in the 119th Congress.</p>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Active Legislation</h2>
+    <div class="rule"></div>
+    <span class="count" id="mr-bill-count"></span>
+  </div>
+  <div class="bills-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Bill</th>
+          <th>Status</th>
+          <th>Momentum</th>
+          <th>Rider Impact</th>
+          <th>Sponsor</th>
+        </tr>
+      </thead>
+      <tbody id="mr-bills-tbody">
+        <tr><td colspan="5" style="color:var(--muted);">Loading…</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-header">
+    <h2>The Issues Explained</h2>
+    <div class="rule"></div>
+  </div>
+
+  <div class="explainer">
+    <h3>Lane Splitting & Lane Filtering</h3>
+    <p>Lane splitting allows motorcyclists to ride between lanes of moving traffic. Lane filtering allows movement between stopped or very slow traffic. Both reduce rear-end collision risk — the leading cause of motorcycle fatalities in urban environments.</p>
+    <div class="key-point">
+      <strong>Current Law</strong>
+      <span>Only California explicitly permits lane splitting. Utah (2019), Montana (2021), and Hawaii (2018 filtering only) permit filtering under specific conditions. All other states prohibit or are silent on the practice.</span>
+    </div>
+    <div class="key-point">
+      <strong>The Safety Argument</strong>
+      <span>A University of California, Berkeley study found lane splitting in traffic moving at 50 mph or less significantly reduced injury risk. Utah's 2019 data shows zero filtering-related fatalities in the first three years.</span>
+    </div>
+    <div class="key-point">
+      <strong>What's Moving</strong>
+      <span>Texas (HB 1927), Minnesota (HF 1623), Georgia, Tennessee, North Carolina, Virginia, Michigan, Pennsylvania, Ohio, and Florida all have active bills this session. Texas is the closest to passage.</span>
+    </div>
+  </div>
+
+  <div class="explainer">
+    <h3>Motorcycle Profiling</h3>
+    <p>Motorcycle profiling occurs when law enforcement targets riders for traffic stops, searches, or surveillance based solely on their motorcycle affiliation — the type of bike, the clothing worn, or the patches displayed — rather than observed traffic violations or criminal activity.</p>
+    <div class="key-point">
+      <strong>The Federal Bill</strong>
+      <span>The Stop Motorcycle Profiling Act (S.1424 / H.R.2843) would direct the Department of Justice to issue guidance requiring state and local law enforcement to adopt written policies prohibiting profiling of motorcyclists. Washington State passed similar legislation at the state level in 2011 — the first in the nation.</span>
+    </div>
+    <div class="key-point">
+      <strong>State Progress</strong>
+      <span>Washington, Oregon, and several other states have enacted profiling protections. The MRF's state-by-state progress map shows 17 states with some form of anti-profiling policy as of 2026.</span>
+    </div>
+  </div>
+
+  <div class="explainer">
+    <h3>HOV Lane Access</h3>
+    <p>High-Occupancy Vehicle lanes were designed to reduce traffic by incentivizing carpooling. Motorcycles — which are inherently space-efficient and reduce congestion — are permitted in HOV lanes in most states, but inconsistencies create confusion and enforcement problems.</p>
+    <div class="key-point">
+      <strong>Where Riders Stand</strong>
+      <span>Most states permit motorcycles in HOV lanes regardless of occupancy. However, several states and some federally-funded HOV projects have created restrictions. The AMA tracks HOV access on a state-by-state basis.</span>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>Easyriders Rider Rights Intelligence Center | Data from Congress.gov, AMA, MRF, state legislatures. Updated weekly. Verify with primary sources.</p>
+  <p class="hpai">Built by <span>Horsepower AI</span> | Jeffrey Najar</p>
+</footer>
+
+<script>
+  async function loadBills() {
+    try {
+      const res = await fetch('data/bills.json');
+      const data = await res.json();
+      const mrBills = data.bills.filter(b => b.issue_area === 'motorcycle-rights');
+      document.getElementById('mr-bill-count').textContent = `${mrBills.length} bills`;
+      const tbody = document.getElementById('mr-bills-tbody');
+      tbody.innerHTML = mrBills.map(b => `
+        <tr>
+          <td>
+            <div class="bill-id">${b.id}</div>
+            <div class="bill-title">${b.title}</div>
+            <div class="bill-summary">${b.summary.substring(0, 100)}…</div>
+          </td>
+          <td>${b.status}</td>
+          <td><span class="badge ${b.momentum.toLowerCase()}">${b.momentum}</span></td>
+          <td><span class="badge ${b.rider_impact === 'HIGH' ? 'high' : 'monitor'}">${b.rider_impact}</span></td>
+          <td style="font-size:0.73rem; color:var(--muted);">${b.sponsor}</td>
+        </tr>
+      `).join('');
+    } catch(e) {
+      document.getElementById('mr-bills-tbody').innerHTML = '<tr><td colspan="5" style="color:var(--muted-dim);">Bill data unavailable.</td></tr>';
+    }
+  }
+  loadBills();
+</script>
+
+</body>
+</html>

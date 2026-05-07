@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Helmet Laws — Easyriders Rider Rights Intelligence Center</title>
+  <style>
+    :root {
+      --black: #0A0A0A; --card-bg: #141414; --card-border: #222222;
+      --orange: #FF6600; --orange-dim: #CC5200; --cream: #F5EDD8;
+      --gold: #E8A020; --red-alert: #CC2200; --white: #FFFFFF;
+      --muted: #888888; --muted-dim: #555555; --active-green: #22CC66;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--black); color: var(--cream); font-family: 'Georgia', serif; line-height: 1.5; }
+    header { background: #0A0A0A; border-bottom: 2px solid var(--orange); padding: 0 2rem; }
+    .header-top { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0 0.5rem; }
+    .site-title .label { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--orange); text-transform: uppercase; font-family: 'Arial', sans-serif; }
+    .site-title h1 { font-size: 1.5rem; color: var(--white); font-weight: bold; }
+    .site-title h1 span { color: var(--orange); }
+    .header-badge { display: flex; align-items: center; gap: 0.5rem; background: #1A0A00; border: 1px solid var(--orange-dim); border-radius: 4px; padding: 0.4rem 0.8rem; }
+    .header-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--active-green); animation: pulse 2s infinite; }
+    .header-badge span { font-size: 0.7rem; letter-spacing: 0.12em; color: var(--orange); text-transform: uppercase; font-family: 'Arial', sans-serif; }
+    nav { display: flex; gap: 0; overflow-x: auto; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; font-family: 'Arial', sans-serif; padding: 0.6rem 1rem; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
+    nav a:hover, nav a.active { color: var(--orange); border-bottom-color: var(--orange); }
+    .page-hero { background: linear-gradient(180deg, #1A0A00 0%, #0A0A0A 100%); border-bottom: 1px solid var(--card-border); padding: 2rem; }
+    .page-hero .breadcrumb { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-family: 'Arial', sans-serif; margin-bottom: 0.5rem; }
+    .page-hero .breadcrumb span { color: var(--orange); }
+    .page-hero h2 { font-size: 1.5rem; color: var(--white); margin-bottom: 0.4rem; }
+    .page-hero p { font-size: 0.85rem; color: var(--muted); font-family: 'Arial', sans-serif; max-width: 640px; }
+    main { max-width: 1300px; margin: 0 auto; padding: 2rem; }
+    .section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1rem; margin-top: 2rem; }
+    .section-header h2 { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); font-family: 'Arial', sans-serif; }
+    .section-header .rule { flex: 1; height: 1px; background: var(--card-border); }
+    .section-header .count { font-size: 0.7rem; color: var(--muted); font-family: 'Arial', sans-serif; }
+
+    /* LEGEND */
+    .legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; align-items: center; }
+    .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-family: 'Arial', sans-serif; color: var(--muted); }
+    .legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+    .legend-dot.universal { background: var(--red-alert); }
+    .legend-dot.partial { background: var(--gold); }
+    .legend-dot.none { background: var(--active-green); }
+
+    /* SUMMARY STRIP */
+    .summary-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+    @media (max-width: 600px) { .summary-strip { grid-template-columns: 1fr; } }
+    .summary-card { border-radius: 6px; padding: 1.3rem; text-align: center; }
+    .summary-card.universal { background: #1A0000; border: 1px solid var(--red-alert); }
+    .summary-card.partial { background: #1A1000; border: 1px solid var(--gold); }
+    .summary-card.none { background: #001A05; border: 1px solid var(--active-green); }
+    .summary-card .s-num { font-size: 2.5rem; font-weight: bold; line-height: 1; }
+    .summary-card.universal .s-num { color: var(--red-alert); }
+    .summary-card.partial .s-num { color: var(--gold); }
+    .summary-card.none .s-num { color: var(--active-green); }
+    .summary-card .s-label { font-size: 0.8rem; font-family: 'Arial', sans-serif; color: var(--muted); margin-top: 0.3rem; }
+    .summary-card .s-sub { font-size: 0.7rem; font-family: 'Arial', sans-serif; color: var(--muted-dim); margin-top: 0.2rem; }
+
+    /* FILTER BAR */
+    .filter-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.2rem; align-items: center; }
+    .filter-bar label { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted-dim); font-family: 'Arial', sans-serif; }
+    .filter-btn { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 3px; padding: 0.3rem 0.7rem; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-family: 'Arial', sans-serif; cursor: pointer; transition: all 0.15s; }
+    .filter-btn:hover, .filter-btn.active { background: var(--orange); border-color: var(--orange); color: var(--black); }
+
+    /* TABLE */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-family: 'Arial', sans-serif; }
+    th { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--orange); background: var(--card-bg); padding: 0.7rem 1rem; text-align: left; border-bottom: 2px solid var(--orange-dim); position: sticky; top: 0; }
+    td { font-size: 0.8rem; color: var(--cream); padding: 0.75rem 1rem; border-bottom: 1px solid var(--card-border); vertical-align: top; }
+    tr:hover td { background: #1A1A1A; }
+    .law-badge { display: inline-block; padding: 0.2rem 0.7rem; border-radius: 3px; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: bold; }
+    .law-badge.universal { background: #2A0000; border: 1px solid var(--red-alert); color: var(--red-alert); }
+    .law-badge.partial { background: #2A1F00; border: 1px solid var(--gold); color: var(--gold); }
+    .law-badge.none { background: #001A05; border: 1px solid var(--active-green); color: var(--active-green); }
+    .active-leg { font-size: 0.68rem; color: var(--orange); font-style: italic; margin-top: 0.2rem; }
+
+    /* EXPLAINER */
+    .explainer { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 6px; padding: 1.5rem; margin-top: 2rem; margin-bottom: 1.5rem; }
+    .explainer h3 { font-size: 1rem; color: var(--white); margin-bottom: 0.8rem; }
+    .explainer p { font-size: 0.82rem; color: var(--muted); font-family: 'Arial', sans-serif; line-height: 1.8; margin-bottom: 0.8rem; }
+    .explainer .key-point { border-left: 3px solid var(--orange); padding-left: 1rem; margin: 1rem 0; }
+    .explainer .key-point strong { color: var(--cream); display: block; font-size: 0.85rem; margin-bottom: 0.3rem; }
+    .explainer .key-point span { font-size: 0.78rem; color: var(--muted); font-family: 'Arial', sans-serif; }
+
+    .note { font-size: 0.72rem; color: var(--muted-dim); font-family: 'Arial', sans-serif; font-style: italic; margin-bottom: 1rem; }
+    footer { border-top: 1px solid var(--card-border); padding: 2rem; text-align: center; }
+    footer p { font-size: 0.72rem; color: var(--muted-dim); font-family: 'Arial', sans-serif; }
+    footer .hpai { color: var(--muted); }
+    footer .hpai span { color: var(--orange); }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="site-title">
+      <span class="label">Easyriders Magazine</span>
+      <h1><span>Rider Rights</span> Intelligence Center</h1>
+    </div>
+    <div class="header-badge">
+      <div class="dot"></div>
+      <span>Live Intelligence</span>
+    </div>
+  </div>
+  <nav>
+    <a href="index.html">Dashboard</a>
+    <a href="motorcycle-rights.html">Motorcycle Rights</a>
+    <a href="right-to-repair.html">Right to Repair</a>
+    <a href="helmet-laws.html" class="active">Helmet Laws</a>
+    <a href="organizations.html">Organizations</a>
+    <a href="news.html">News Feed</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <div class="breadcrumb">Rider Rights Intelligence / <span>Helmet Laws</span></div>
+  <h2>Helmet Law Tracker — All 50 States</h2>
+  <p>State-by-state coverage of current helmet requirements, age thresholds, active legislation, and the political forces shaping rider choice across America.</p>
+</div>
+
+<main>
+
+  <div class="section-header" style="margin-top:0;">
+    <h2>The Landscape</h2>
+    <div class="rule"></div>
+  </div>
+  <div class="summary-strip">
+    <div class="summary-card universal">
+      <div class="s-num" id="count-universal">19</div>
+      <div class="s-label">Universal Mandate</div>
+      <div class="s-sub">All riders must wear a DOT helmet + DC</div>
+    </div>
+    <div class="summary-card partial">
+      <div class="s-num" id="count-partial">28</div>
+      <div class="s-label">Partial Requirement</div>
+      <div class="s-sub">Age-based — usually under 18 or 21</div>
+    </div>
+    <div class="summary-card none">
+      <div class="s-num" id="count-none">3</div>
+      <div class="s-label">No Requirement</div>
+      <div class="s-sub">IL, IA, NH — adult choice fully protected</div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>State-by-State Table</h2>
+    <div class="rule"></div>
+    <span class="count">51 jurisdictions including DC</span>
+  </div>
+  <p class="note">Data as of May 2026. Laws change — always verify with your state DMV before riding. Sources: IIHS, AMA, NHTSA, state motor vehicle codes.</p>
+  <div class="filter-bar">
+    <label>Filter:</label>
+    <button class="filter-btn active" onclick="filterTable('all', this)">All States</button>
+    <button class="filter-btn" onclick="filterTable('universal', this)">Universal</button>
+    <button class="filter-btn" onclick="filterTable('partial', this)">Partial</button>
+    <button class="filter-btn" onclick="filterTable('none', this)">No Requirement</button>
+    <button class="filter-btn" onclick="filterTable('active_leg', this)">Active Legislation</button>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot universal"></div><span>Universal — all riders</span></div>
+    <div class="legend-item"><div class="legend-dot partial"></div><span>Partial — age-based</span></div>
+    <div class="legend-item"><div class="legend-dot none"></div><span>No requirement</span></div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>State</th>
+          <th>Law Type</th>
+          <th>Details</th>
+          <th>Last Changed</th>
+          <th>Active Legislation</th>
+        </tr>
+      </thead>
+      <tbody id="helmet-tbody">
+        <tr><td colspan="5" style="color:var(--muted);">Loading state data…</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-header">
+    <h2>The Issue Explained</h2>
+    <div class="rule"></div>
+  </div>
+  <div class="explainer">
+    <h3>Helmet Choice vs. Helmet Mandate — The Rider Rights Position</h3>
+    <p>The AMA, MRF, and ABATE all share the same core position: the decision to wear a helmet should belong to the adult rider, not the government. This isn't an anti-safety argument — it's a freedom argument. Riders who choose to wear helmets (the vast majority do) should do so because they've made an informed choice, not because the state made it for them.</p>
+    <div class="key-point">
+      <strong>The AMA's Official Position</strong>
+      <span>The American Motorcyclist Association supports motorcycle rider education, training, and the right of motorcyclists to make their own decisions about helmet use. The AMA opposes laws that mandate helmet use for adult riders.</span>
+    </div>
+    <div class="key-point">
+      <strong>The Federal Pressure Track</strong>
+      <span>Federal highway funding incentives have historically been used to pressure states into universal helmet laws. The NHTSA continues to advocate for universal coverage nationally, but no federal mandate has been enacted. Current NHTSA activity focuses on updating DOT helmet performance standards (FMVSS 218) — not mandating universal use.</span>
+    </div>
+    <div class="key-point">
+      <strong>States That Rolled Back Mandates</strong>
+      <span>Michigan repealed its universal helmet law in 2012 — the most recent large-state rollback. Florida's partial rollback for riders 21+ with insurance came in 2000. Texas implemented a similar partial system in 1997. Each rollback has been studied extensively; IIHS and NHTSA data consistently show increased fatalities after repeal, while rider-rights groups contest the methodology.</span>
+    </div>
+    <div class="key-point">
+      <strong>What Active Legislation Looks Like</strong>
+      <span>Ohio HB 244 is the most active current bill — it would restore adult choice for riders 21+ who carry adequate insurance. Similar bills surface annually in states with universal mandates. Repeal efforts are most active in the Southeast and Midwest.</span>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>Easyriders Rider Rights Intelligence Center | Data sourced from IIHS, AMA, NHTSA, and state motor vehicle codes. Updated regularly. Always verify with your state DMV.</p>
+  <p class="hpai">Built by <span>Horsepower AI</span> | Jeffrey Najar</p>
+</footer>
+
+<script>
+  let allStates = [];
+
+  async function loadHelmetData() {
+    try {
+      const res = await fetch('data/helmet-laws.json');
+      const data = await res.json();
+      allStates = data.states;
+
+      const counts = { universal: 0, partial: 0, none: 0 };
+      allStates.forEach(s => { if (counts[s.law] !== undefined) counts[s.law]++; });
+      document.getElementById('count-universal').textContent = counts.universal;
+      document.getElementById('count-partial').textContent = counts.partial;
+      document.getElementById('count-none').textContent = counts.none;
+
+      renderTable('all');
+    } catch(e) {
+      document.getElementById('helmet-tbody').innerHTML = '<tr><td colspan="5" style="color:var(--muted-dim);">Data unavailable.</td></tr>';
+    }
+  }
+
+  function renderTable(filter) {
+    const tbody = document.getElementById('helmet-tbody');
+    let states = allStates;
+    if (filter === 'active_leg') {
+      states = allStates.filter(s => s.active_legislation);
+    } else if (filter !== 'all') {
+      states = allStates.filter(s => s.law === filter);
+    }
+
+    tbody.innerHTML = states.map(s => `
+      <tr data-law="${s.law}" data-active="${s.active_legislation ? 'yes' : 'no'}">
+        <td><strong>${s.state}</strong> <span style="color:var(--muted-dim);font-size:0.7rem;">${s.abbr}</span></td>
+        <td><span class="law-badge ${s.law}">${s.law === 'universal' ? 'Universal' : s.law === 'partial' ? 'Partial' : 'None'}</span></td>
+        <td>
+          ${s.details}
+          ${s.active_legislation ? `<div class="active-leg">⚡ ${s.active_legislation}</div>` : ''}
+        </td>
+        <td style="color:var(--muted);font-size:0.75rem;">${s.last_change || '—'}</td>
+        <td style="font-size:0.75rem; color:var(--muted);">${s.active_legislation ? s.active_legislation : '—'}</td>
+      </tr>
+    `).join('');
+  }
+
+  function filterTable(filter, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderTable(filter);
+  }
+
+  loadHelmetData();
+</script>
+
+</body>
+</html>

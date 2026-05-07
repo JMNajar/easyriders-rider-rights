@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Organizations — Easyriders Rider Rights Intelligence Center</title>
+  <style>
+    :root {
+      --black: #0A0A0A; --card-bg: #141414; --card-border: #222222;
+      --orange: #FF6600; --orange-dim: #CC5200; --cream: #F5EDD8;
+      --gold: #E8A020; --red-alert: #CC2200; --white: #FFFFFF;
+      --muted: #888888; --muted-dim: #555555; --active-green: #22CC66;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--black); color: var(--cream); font-family: 'Georgia', serif; line-height: 1.5; }
+    header { background: #0A0A0A; border-bottom: 2px solid var(--orange); padding: 0 2rem; }
+    .header-top { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0 0.5rem; }
+    .site-title .label { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--orange); text-transform: uppercase; font-family: 'Arial', sans-serif; }
+    .site-title h1 { font-size: 1.5rem; color: var(--white); font-weight: bold; }
+    .site-title h1 span { color: var(--orange); }
+    .header-badge { display: flex; align-items: center; gap: 0.5rem; background: #1A0A00; border: 1px solid var(--orange-dim); border-radius: 4px; padding: 0.4rem 0.8rem; }
+    .header-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--active-green); animation: pulse 2s infinite; }
+    .header-badge span { font-size: 0.7rem; letter-spacing: 0.12em; color: var(--orange); text-transform: uppercase; font-family: 'Arial', sans-serif; }
+    nav { display: flex; gap: 0; overflow-x: auto; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; font-family: 'Arial', sans-serif; padding: 0.6rem 1rem; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
+    nav a:hover, nav a.active { color: var(--orange); border-bottom-color: var(--orange); }
+    .page-hero { background: linear-gradient(180deg, #1A0A00 0%, #0A0A0A 100%); border-bottom: 1px solid var(--card-border); padding: 2rem; }
+    .page-hero .breadcrumb { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-family: 'Arial', sans-serif; margin-bottom: 0.5rem; }
+    .page-hero .breadcrumb span { color: var(--orange); }
+    .page-hero h2 { font-size: 1.5rem; color: var(--white); margin-bottom: 0.4rem; }
+    .page-hero p { font-size: 0.85rem; color: var(--muted); font-family: 'Arial', sans-serif; max-width: 640px; }
+    main { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+    .section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.2rem; margin-top: 2rem; }
+    .section-header h2 { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); font-family: 'Arial', sans-serif; }
+    .section-header .rule { flex: 1; height: 1px; background: var(--card-border); }
+
+    .org-card { background: var(--card-bg); border: 1px solid var(--card-border); border-left: 4px solid var(--orange); border-radius: 6px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .org-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
+    .org-name { font-size: 1.1rem; color: var(--white); font-weight: bold; }
+    .org-abbr-full { font-size: 0.75rem; color: var(--orange); font-family: 'Arial', sans-serif; margin-top: 0.2rem; }
+    .org-url { font-size: 0.72rem; color: var(--muted); font-family: 'Arial', sans-serif; }
+    .org-desc { font-size: 0.82rem; color: var(--muted); font-family: 'Arial', sans-serif; line-height: 1.8; margin-bottom: 1rem; }
+    .org-focus-list { display: flex; flex-direction: column; gap: 0.4rem; }
+    .org-focus-item { display: flex; gap: 0.5rem; align-items: flex-start; font-size: 0.78rem; font-family: 'Arial', sans-serif; color: var(--muted); }
+    .org-focus-item::before { content: '▶'; color: var(--orange); font-size: 0.6rem; margin-top: 0.2rem; flex-shrink: 0; }
+    .org-take-action { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--card-border); }
+    .org-take-action h5 { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--orange); font-family: 'Arial', sans-serif; margin-bottom: 0.4rem; }
+    .org-take-action p { font-size: 0.78rem; color: var(--muted); font-family: 'Arial', sans-serif; }
+
+    .state-orgs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .state-org-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 5px; padding: 1rem; }
+    .state-org-card h4 { font-size: 0.85rem; color: var(--white); margin-bottom: 0.3rem; }
+    .state-org-card .soc-state { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange); font-family: 'Arial', sans-serif; margin-bottom: 0.4rem; }
+    .state-org-card p { font-size: 0.73rem; color: var(--muted); font-family: 'Arial', sans-serif; line-height: 1.6; }
+
+    footer { border-top: 1px solid var(--card-border); padding: 2rem; text-align: center; }
+    footer p { font-size: 0.72rem; color: var(--muted-dim); font-family: 'Arial', sans-serif; }
+    footer .hpai { color: var(--muted); }
+    footer .hpai span { color: var(--orange); }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="site-title">
+      <span class="label">Easyriders Magazine</span>
+      <h1><span>Rider Rights</span> Intelligence Center</h1>
+    </div>
+    <div class="header-badge">
+      <div class="dot"></div>
+      <span>Live Intelligence</span>
+    </div>
+  </div>
+  <nav>
+    <a href="index.html">Dashboard</a>
+    <a href="motorcycle-rights.html">Motorcycle Rights</a>
+    <a href="right-to-repair.html">Right to Repair</a>
+    <a href="helmet-laws.html">Helmet Laws</a>
+    <a href="organizations.html" class="active">Organizations</a>
+    <a href="news.html">News Feed</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <div class="breadcrumb">Rider Rights Intelligence / <span>Organizations</span></div>
+  <h2>Rider Rights Organizations</h2>
+  <p>The groups fighting for your rights at the federal and state level. Know who's in your corner, what they're focused on, and how to plug in.</p>
+</div>
+
+<main>
+
+  <div class="section-header" style="margin-top:0;">
+    <h2>National Organizations</h2>
+    <div class="rule"></div>
+  </div>
+
+  <div class="org-card">
+    <div class="org-header">
+      <div>
+        <div class="org-name">American Motorcyclist Association</div>
+        <div class="org-abbr-full">AMA — Founded 1924</div>
+        <div class="org-url">amacycle.org | Washington, DC advocacy office</div>
+      </div>
+    </div>
+    <div class="org-desc">
+      The AMA is the largest and oldest motorcycling rights organization in the United States, with over 200,000 members. They maintain a full-time government relations staff that monitors federal legislation, works with state affiliates on local bills, and files regulatory comments with agencies like NHTSA, EPA, and the Bureau of Land Management.
+    </div>
+    <div class="org-focus-list">
+      <div class="org-focus-item">Right to Repair — AMA supports H.R. 906 and maintains a dedicated action page at amacycle.org/repair</div>
+      <div class="org-focus-item">Helmet Choice — AMA officially opposes mandatory helmet laws for adult riders</div>
+      <div class="org-focus-item">Lane Splitting/Filtering — AMA supports rider right to filter and monitors state bills</div>
+      <div class="org-focus-item">Public Land Access — fighting BLM and USFS trail closures that eliminate riding access</div>
+      <div class="org-focus-item">Motorcycle Profiling — supports federal anti-profiling legislation</div>
+    </div>
+    <div class="org-take-action">
+      <h5>How to Engage</h5>
+      <p>Join at amacycle.org. Use the AMA Advocacy Action Center to send pre-written letters to your representatives on active bills. Follow @AMADirectConnect for real-time legislative alerts.</p>
+    </div>
+  </div>
+
+  <div class="org-card">
+    <div class="org-header">
+      <div>
+        <div class="org-name">Motorcycle Riders Foundation</div>
+        <div class="org-abbr-full">MRF — Founded 1987</div>
+        <div class="org-url">mrf.org | Washington, DC</div>
+      </div>
+    </div>
+    <div class="org-desc">
+      The MRF is a federally-focused rider rights organization known for its direct lobbying presence on Capitol Hill. Smaller and more focused than the AMA, the MRF specializes in federal legislative strategy and has been particularly effective on profiling and transportation funding issues. Their annual "Ride-In on Washington" brings riders directly to congressional offices.
+    </div>
+    <div class="org-focus-list">
+      <div class="org-focus-item">Motorcycle Profiling — primary champion of the Stop Motorcycle Profiling Act</div>
+      <div class="org-focus-item">Transportation Equity — fighting for motorcycle inclusion in federal infrastructure funding</div>
+      <div class="org-focus-item">Lane Filtering — supports state-level bills and tracks national progress</div>
+      <div class="org-focus-item">Voter Mobilization — "Ride the Vote" campaign targeting the 10M registered riders</div>
+    </div>
+    <div class="org-take-action">
+      <h5>How to Engage</h5>
+      <p>Become a member at mrf.org. Attend the annual Ride-In on Washington. Subscribe to the MRF Report newsletter for weekly legislative updates. Follow them on social for rapid-response alerts.</p>
+    </div>
+  </div>
+
+  <div class="org-card">
+    <div class="org-header">
+      <div>
+        <div class="org-name">ABATE</div>
+        <div class="org-abbr-full">A Brotherhood Against Totalitarian Enactments — State Chapters Nationwide</div>
+        <div class="org-url">Various state chapter URLs — search "[Your State] ABATE"</div>
+      </div>
+    </div>
+    <div class="org-desc">
+      ABATE is a decentralized network of state-level rider rights organizations, each independently organized. Chapters are the most grassroots force in motorcycle rights — they show up at state capitols, organize rallies, and run the rider education programs that give riders credibility in legislative testimony. If the AMA is the federal voice and the MRF is the DC strategist, ABATE is the ground game.
+    </div>
+    <div class="org-focus-list">
+      <div class="org-focus-item">Helmet Choice — ABATE chapters are the primary force behind state-level helmet repeal and rollback bills</div>
+      <div class="org-focus-item">Rider Education — many chapters run MSF-certified training programs</div>
+      <div class="org-focus-item">State Legislative Testimony — chapters appear at committee hearings on motorcycle legislation</div>
+      <div class="org-focus-item">Community — rallies, charity rides, and local networking</div>
+    </div>
+    <div class="org-take-action">
+      <h5>How to Engage</h5>
+      <p>Find your state's ABATE chapter by searching "[your state] ABATE motorcycle." Most chapters hold monthly meetings open to any rider. This is where real legislative relationships are built at the state level.</p>
+    </div>
+  </div>
+
+  <div class="org-card">
+    <div class="org-header">
+      <div>
+        <div class="org-name">Motorcycle Industry Council</div>
+        <div class="org-abbr-full">MIC — Industry Trade Association</div>
+        <div class="org-url">mic.org | Irvine, CA</div>
+      </div>
+    </div>
+    <div class="org-desc">
+      The MIC represents manufacturers, distributors, and retailers — not individual riders. They lobby on issues that affect the industry: emissions standards, tariffs, right-to-repair (on the manufacturer side), and market regulations. Their interests sometimes align with riders (e.g., opposing EPA regulations that would eliminate popular bike categories) and sometimes diverge (e.g., opposing right-to-repair legislation).
+    </div>
+    <div class="org-focus-list">
+      <div class="org-focus-item">EPA Emissions — fights regulations that would eliminate off-road or older-style engines</div>
+      <div class="org-focus-item">Tariffs — opposes import tariffs that raise motorcycle and parts prices</div>
+      <div class="org-focus-item">Right to Repair — OPPOSES open data requirements, cites cybersecurity concerns</div>
+      <div class="org-focus-item">Safety Standards — works with NHTSA on helmet and equipment standards</div>
+    </div>
+    <div class="org-take-action">
+      <h5>Note for Riders</h5>
+      <p>The MIC is not a rider advocacy organization. Monitor their positions — when MIC opposes a bill, it often means the bill is good for riders. When they support a bill, read carefully.</p>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>State ABATE Chapters — Key States</h2>
+    <div class="rule"></div>
+  </div>
+  <div class="state-orgs-grid">
+    <div class="state-org-card">
+      <div class="soc-state">California</div>
+      <h4>ABATE of California</h4>
+      <p>Active on lane splitting rights, helmet choice advocacy, and off-highway vehicle access. Coordinates with CHP on lane splitting education.</p>
+    </div>
+    <div class="state-org-card">
+      <div class="soc-state">Texas</div>
+      <h4>ABATE of Texas</h4>
+      <p>Supporting HB 1927 (lane filtering) and monitoring state right-to-repair bills. Large chapter network across all major metro areas.</p>
+    </div>
+    <div class="state-org-card">
+      <div class="soc-state">Florida</div>
+      <h4>ABATE of Florida</h4>
+      <p>Monitors helmet law rollback efforts and lane filtering legislation. Hosts Biketoberfest liaison activities and state Bike Week advocacy.</p>
+    </div>
+    <div class="state-org-card">
+      <div class="soc-state">Ohio</div>
+      <h4>ABATE of Ohio</h4>
+      <p>Actively lobbying for HB 244 (adult helmet choice repeal). One of the most organized state chapters in the Midwest.</p>
+    </div>
+    <div class="state-org-card">
+      <div class="soc-state">Pennsylvania</div>
+      <h4>ABATE of Pennsylvania</h4>
+      <p>Long-running efforts to restore full adult helmet choice. Pennsylvania's partial law still requires coverage for younger riders and those without experience + insurance.</p>
+    </div>
+    <div class="state-org-card">
+      <div class="soc-state">New York</div>
+      <h4>ABATE of New York</h4>
+      <p>Operates under a universal helmet mandate. Focused on preventing expansion of restrictions and monitoring lane filtering bill progress.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>Easyriders Rider Rights Intelligence Center | Organization information current as of May 2026. Verify chapter details directly with each organization.</p>
+  <p class="hpai">Built by <span>Horsepower AI</span> | Jeffrey Najar</p>
+</footer>
+
+</body>
+</html>

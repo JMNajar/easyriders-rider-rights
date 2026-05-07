@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Easyriders Rider Rights Intelligence Center</title>
+  <style>
+    :root {
+      --black: #0A0A0A; --card-bg: #141414; --card-border: #222222;
+      --orange: #FF6600; --orange-dim: #CC5200; --cream: #F5EDD8;
+      --gold: #E8A020; --red-alert: #CC2200; --white: #FFFFFF;
+      --muted: #888888; --muted-dim: #555555; --active-green: #22CC66;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--black); color: var(--cream); font-family: 'Georgia', serif; line-height: 1.5; }
+    header { background: #0A0A0A; border-bottom: 2px solid var(--orange); padding: 0 2rem; }
+    .header-top { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0 0.5rem; }
+    .site-title .label { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--orange); text-transform: uppercase; font-family: 'Arial', sans-serif; }
+    .site-title h1 { font-size: 1.5rem; color: var(--white); font-weight: bold; }
+    .site-title h1 span { color: var(--orange); }
+    .header-badge { display: flex; align-items: center; gap: 0.5rem; background: #1A0A00; border: 1px solid var(--orange-dim); border-radius: 4px; padding: 0.4rem 0.8rem; }
+    .header-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--active-green); animation: pulse 2s infinite; }
+    .header-badge span { font-size: 0.7rem; letter-spacing: 0.12em; color: var(--orange); text-transform: uppercase; font-family: 'Arial', sans-serif; }
+    nav { display: flex; gap: 0; overflow-x: auto; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; font-family: 'Arial', sans-serif; padding: 0.6rem 1rem; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
+    nav a:hover, nav a.active { color: var(--orange); border-bottom-color: var(--orange); }
+    .page-hero { background: linear-gradient(180deg, #1A0A00 0%, #0A0A0A 100%); border-bottom: 1px solid var(--card-border); padding: 2rem; }
+    .page-hero .breadcrumb { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-family: 'Arial', sans-serif; margin-bottom: 0.5rem; }
+    .page-hero .breadcrumb span { color: var(--orange); }
+    .page-hero h2 { font-size: 1.5rem; color: var(--white); margin-bottom: 0.4rem; }
+    .page-hero p { font-size: 0.85rem; color: var(--muted); font-family: 'Arial', sans-serif; max-width: 640px; }
+    main { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.2rem; margin-top: 2rem; }
+    .section-header h2 { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); font-family: 'Arial', sans-serif; }
+    .section-header .rule { flex: 1; height: 1px; background: var(--card-border); }
+
+    .content-block { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 6px; padding: 1.8rem; margin-bottom: 1.5rem; }
+    .content-block h3 { font-size: 1.05rem; color: var(--white); margin-bottom: 0.8rem; }
+    .content-block p { font-size: 0.85rem; color: var(--muted); font-family: 'Arial', sans-serif; line-height: 1.9; margin-bottom: 0.8rem; }
+    .content-block p:last-child { margin-bottom: 0; }
+
+    .what-it-tracks { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .track-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 5px; padding: 1.1rem; }
+    .track-card .track-icon { font-size: 1.5rem; margin-bottom: 0.4rem; }
+    .track-card h4 { font-size: 0.85rem; color: var(--white); margin-bottom: 0.4rem; }
+    .track-card p { font-size: 0.75rem; color: var(--muted); font-family: 'Arial', sans-serif; line-height: 1.7; }
+
+    /* BUILDER CARD */
+    .builder-card { background: var(--card-bg); border: 1px solid var(--orange-dim); border-radius: 6px; padding: 1.8rem; margin-bottom: 1.5rem; }
+    .builder-card .bc-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+    .builder-avatar { width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, var(--orange), var(--orange-dim)); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: bold; color: var(--black); flex-shrink: 0; }
+    .builder-info .name { font-size: 1rem; color: var(--white); font-weight: bold; }
+    .builder-info .title { font-size: 0.75rem; color: var(--orange); font-family: 'Arial', sans-serif; }
+    .builder-info .company { font-size: 0.72rem; color: var(--muted); font-family: 'Arial', sans-serif; }
+    .builder-bio { font-size: 0.82rem; color: var(--muted); font-family: 'Arial', sans-serif; line-height: 1.9; margin-bottom: 0.8rem; }
+    .builder-contact { font-size: 0.75rem; color: var(--muted-dim); font-family: 'Arial', sans-serif; }
+    .builder-contact span { color: var(--orange); }
+
+    .hpai-card { background: #0D0D0D; border: 1px solid var(--card-border); border-radius: 6px; padding: 1.5rem; margin-bottom: 1.5rem; display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap; }
+    .hpai-logo { font-size: 1.2rem; font-weight: bold; color: var(--orange); font-family: 'Arial', sans-serif; letter-spacing: 0.05em; white-space: nowrap; }
+    .hpai-logo span { color: var(--cream); }
+    .hpai-desc { font-size: 0.8rem; color: var(--muted); font-family: 'Arial', sans-serif; line-height: 1.8; flex: 1; min-width: 200px; }
+
+    .sources-table { width: 100%; border-collapse: collapse; font-family: 'Arial', sans-serif; margin-bottom: 1rem; }
+    .sources-table th { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--orange); background: var(--card-bg); padding: 0.6rem 1rem; text-align: left; border-bottom: 2px solid var(--orange-dim); }
+    .sources-table td { font-size: 0.78rem; color: var(--cream); padding: 0.6rem 1rem; border-bottom: 1px solid var(--card-border); }
+    .sources-table td:last-child { color: var(--muted); font-size: 0.73rem; }
+
+    footer { border-top: 1px solid var(--card-border); padding: 2rem; text-align: center; }
+    footer p { font-size: 0.72rem; color: var(--muted-dim); font-family: 'Arial', sans-serif; }
+    footer .hpai { color: var(--muted); }
+    footer .hpai span { color: var(--orange); }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="site-title">
+      <span class="label">Easyriders Magazine</span>
+      <h1><span>Rider Rights</span> Intelligence Center</h1>
+    </div>
+    <div class="header-badge">
+      <div class="dot"></div>
+      <span>Live Intelligence</span>
+    </div>
+  </div>
+  <nav>
+    <a href="index.html">Dashboard</a>
+    <a href="motorcycle-rights.html">Motorcycle Rights</a>
+    <a href="right-to-repair.html">Right to Repair</a>
+    <a href="helmet-laws.html">Helmet Laws</a>
+    <a href="organizations.html">Organizations</a>
+    <a href="news.html">News Feed</a>
+    <a href="about.html" class="active">About</a>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <div class="breadcrumb">Rider Rights Intelligence / <span>About</span></div>
+  <h2>About This Program</h2>
+  <p>Who built this, what it tracks, where the data comes from, and why it matters for every American rider.</p>
+</div>
+
+<main>
+
+  <div class="section-header" style="margin-top:0;">
+    <h2>What This Is</h2>
+    <div class="rule"></div>
+  </div>
+  <div class="content-block">
+    <h3>The Easyriders Rider Rights Intelligence Center</h3>
+    <p>This is a real-time policy intelligence platform built for the Easyriders Magazine community. It tracks the legislation, regulations, and political forces that shape the rights of American motorcyclists — across three issue areas that matter most to riders: the right to ride without government interference, the right to repair and maintain your own machine, and the ongoing fight over helmet choice.</p>
+    <p>Most riders don't have time to monitor 50 state legislatures, watch the Federal Register, and follow congressional committee activity. This platform does it automatically — aggregating data daily, surfacing what's moving, and translating policy language into plain English briefings that tell you what it means for you on the road.</p>
+    <p>It is always free. It is built to be trusted. Every piece of information is sourced from primary government sources, the AMA, the MRF, or major motorcycling publications — and every source is cited.</p>
+  </div>
+
+  <div class="section-header">
+    <h2>What It Tracks</h2>
+    <div class="rule"></div>
+  </div>
+  <div class="what-it-tracks">
+    <div class="track-card">
+      <div class="track-icon">🏛</div>
+      <h4>Federal Legislation</h4>
+      <p>Bills in the House and Senate with motorcycle or powersports impact. Updated weekly from Congress.gov. Tracks status, momentum, cosponsors, and committee activity.</p>
+    </div>
+    <div class="track-card">
+      <div class="track-icon">🗺</div>
+      <h4>State Laws — All 50</h4>
+      <p>Current helmet law status for every state, including active legislation that could change the landscape. Updated as laws change.</p>
+    </div>
+    <div class="track-card">
+      <div class="track-icon">📋</div>
+      <h4>State Bills</h4>
+      <p>Active state-level bills on lane filtering, profiling, right to repair, and other rider rights issues. Tracked across key states each legislative session.</p>
+    </div>
+    <div class="track-card">
+      <div class="track-icon">📰</div>
+      <h4>Daily News</h4>
+      <p>Curated stories from AMA, MRF, Cycle World, Cycle News, and major outlets. Updated daily at 6am ET. Every story gets an AI-generated rider briefing.</p>
+    </div>
+    <div class="track-card">
+      <div class="track-icon">⚖️</div>
+      <h4>Regulatory Actions</h4>
+      <p>NHTSA rulemakings, EPA actions, and Federal Register notices that affect motorcycle safety standards, emissions, and equipment requirements.</p>
+    </div>
+    <div class="track-card">
+      <div class="track-icon">🏢</div>
+      <h4>Organizations</h4>
+      <p>Profiles of the AMA, MRF, ABATE, and other advocacy groups — including their current priorities and how to get involved.</p>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Built By</h2>
+    <div class="rule"></div>
+  </div>
+
+  <div class="builder-card">
+    <div class="bc-header">
+      <div class="builder-avatar">JN</div>
+      <div class="builder-info">
+        <div class="name">Jeffrey Najar</div>
+        <div class="title">Digital Business Owner | AI Strategist</div>
+        <div class="company">Horsepower AI | The AI Launch Pad</div>
+      </div>
+    </div>
+    <div class="builder-bio">
+      Jeffrey Najar builds AI-powered intelligence platforms that give organizations real-time visibility into the policies, markets, and forces that affect their business. He is the founder of Horsepower AI and co-director of The AI Launch Pad — a program that trains CEOs and senior leaders to build and deploy their own AI advisory systems.
+    </div>
+    <div class="builder-bio">
+      The Rider Rights Intelligence Center is part of a growing portfolio of AI-powered vertical intelligence platforms built by Horsepower AI for industries and communities that deserve institutional-grade policy insight without the institutional price tag. Previous builds include regulatory intelligence platforms for the cannabis industry and nutraceutical markets.
+    </div>
+    <div class="builder-contact">
+      Contact: <span>jeff.najar@horsepowermarketing.com</span>
+    </div>
+  </div>
+
+  <div class="hpai-card">
+    <div class="hpai-logo">Horsepower <span>AI</span></div>
+    <div class="hpai-desc">
+      Horsepower AI builds custom AI-powered intelligence tools for businesses and communities that need to stay ahead of fast-moving regulatory and market environments. Every platform is designed to do the research automatically so decision-makers can act on what matters — not spend their time finding it. Platforms are built to enterprise standards and deployed at startup speed.
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Data Sources & Methodology</h2>
+    <div class="rule"></div>
+  </div>
+  <div class="content-block">
+    <table class="sources-table">
+      <thead>
+        <tr><th>Source</th><th>What We Pull</th><th>Update Schedule</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Congress.gov API</td><td>Federal bill status, sponsors, committee assignments, vote counts</td><td>Weekly — Mondays 5am ET</td></tr>
+        <tr><td>State Legislature Feeds</td><td>Key state bill status — TX, OH, FL, MN, GA, NC, VA, PA</td><td>Weekly during active sessions</td></tr>
+        <tr><td>Federal Register</td><td>NHTSA rulemakings, EPA actions, DOT notices</td><td>Daily — 6am ET</td></tr>
+        <tr><td>AMA Legislative Feed</td><td>AMA action alerts, bill endorsements, advocacy updates</td><td>Daily</td></tr>
+        <tr><td>Google News RSS</td><td>Top rider rights stories from all major publications</td><td>Daily — 6am ET</td></tr>
+        <tr><td>IIHS / NHTSA Data</td><td>Helmet law database, crash statistics</td><td>Quarterly review</td></tr>
+      </tbody>
+    </table>
+    <p>Plain-English briefings are generated using the Anthropic Claude API. Briefings summarize the policy significance of each story for motorcyclists in terms of impact, timeline, and recommended action. Raw data is always shown alongside briefings so readers can verify the source.</p>
+    <p>This platform does not editorialize about policy positions. It presents what legislators are doing and what advocacy organizations are saying — and gives riders the information they need to form their own view and take action if they choose.</p>
+  </div>
+
+  <div class="section-header">
+    <h2>Disclaimer</h2>
+    <div class="rule"></div>
+  </div>
+  <div class="content-block">
+    <p>The Easyriders Rider Rights Intelligence Center is an information resource, not legal advice. Laws change. Verify helmet law status, bill status, and any regulatory information with primary sources — your state DMV, Congress.gov, or the applicable state legislature — before making decisions based on this platform. Easyriders Magazine and Horsepower AI are not liable for actions taken based on information presented here.</p>
+  </div>
+
+</main>
+
+<footer>
+  <p>Easyriders Rider Rights Intelligence Center | Easyriders Magazine | All rights reserved.</p>
+  <p class="hpai">Built by <span>Horsepower AI</span> | Jeffrey Najar | jeff.najar@horsepowermarketing.com</p>
+</footer>
+
+</body>
+</html>

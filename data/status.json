@@ -1,0 +1,88 @@
+{
+  "last_updated": "2026-05-07T06:00:00Z",
+  "signals": [
+    {
+      "id": "repair-act",
+      "title": "Federal Right to Repair",
+      "subtitle": "REPAIR Act — H.R. 906",
+      "status": "ACTIVE",
+      "priority": "HIGH",
+      "dot": "active",
+      "headline": "In House Energy & Commerce Committee",
+      "detail": "H.R. 906 referred to committee — hearings expected Q2–Q3 2026. Manufacturer lobbying intensifying.",
+      "issue_area": "right-to-repair"
+    },
+    {
+      "id": "helmet-federal",
+      "title": "Federal Helmet Pressure",
+      "subtitle": "NHTSA Rulemaking Watch",
+      "status": "MONITOR",
+      "priority": "WATCH",
+      "dot": "watch",
+      "headline": "NHTSA reviewing helmet standards",
+      "detail": "NHTSA proposing updated FMVSS No. 218 standards. No federal mandate proposed — monitoring for rider impact.",
+      "issue_area": "helmet-laws"
+    },
+    {
+      "id": "ama-session",
+      "title": "AMA Legislative Session",
+      "subtitle": "2026 Priorities",
+      "status": "ACTIVE",
+      "priority": "HIGH",
+      "dot": "active",
+      "headline": "AMA tracking 34 state bills in 2026",
+      "detail": "American Motorcyclist Association monitoring lane filtering, right to repair, and profiling legislation across 34 states.",
+      "issue_area": "motorcycle-rights"
+    },
+    {
+      "id": "lane-filtering",
+      "title": "Lane Filtering Bills",
+      "subtitle": "State Legislation",
+      "status": "MOVING",
+      "priority": "HIGH",
+      "dot": "moving",
+      "headline": "Active in 9 states this session",
+      "detail": "Bills advancing in TX, OH, GA, TN, NC, VA, MI, PA, FL. Utah and Montana already permit filtering.",
+      "issue_area": "motorcycle-rights"
+    },
+    {
+      "id": "profiling-act",
+      "title": "Stop Motorcycle Profiling Act",
+      "subtitle": "Federal — S.1424 / H.R.2843",
+      "status": "QUIET",
+      "priority": "MONITOR",
+      "dot": "quiet",
+      "headline": "Reintroduced in 119th Congress",
+      "detail": "Federal bill would direct DOJ to issue guidance ending discriminatory traffic stops based on motorcycle affiliation.",
+      "issue_area": "motorcycle-rights"
+    },
+    {
+      "id": "state-helmet-map",
+      "title": "State Helmet Law Landscape",
+      "subtitle": "50-State Coverage",
+      "status": "ONGOING",
+      "priority": "MONITOR",
+      "dot": "active",
+      "headline": "3 states have no helmet law",
+      "detail": "IL, IA, NH have no helmet requirement. 19 states + DC mandate universal coverage. 28 states have age-based partial laws.",
+      "issue_area": "helmet-laws"
+    }
+  ],
+  "week_in_review": {
+    "changes": 3,
+    "items": [
+      {
+        "bill": "REPAIR Act (H.R. 906)",
+        "update": "Gained 12 new cosponsors — now at 67 total. Manufacturer lobby spending up $2.1M this quarter."
+      },
+      {
+        "bill": "Texas Lane Filtering (HB 1927)",
+        "update": "Passed House Transportation Committee 8–3. Heading to full House vote."
+      },
+      {
+        "bill": "Ohio Universal Helmet Repeal",
+        "update": "HB 244 reintroduced to restore rider choice for adults. In committee."
+      }
+    ]
+  }
+}
