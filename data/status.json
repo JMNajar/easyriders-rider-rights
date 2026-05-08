@@ -1,15 +1,15 @@
 {
-  "last_updated": "2026-05-07T06:00:00Z",
+  "last_updated": "2026-05-08T02:58:38Z",
   "signals": [
     {
       "id": "repair-act",
       "title": "Federal Right to Repair",
-      "subtitle": "REPAIR Act — H.R. 906",
+      "subtitle": "REPAIR Act \u2014 H.R. 906",
       "status": "ACTIVE",
       "priority": "HIGH",
       "dot": "active",
       "headline": "In House Energy & Commerce Committee",
-      "detail": "H.R. 906 referred to committee — hearings expected Q2–Q3 2026. Manufacturer lobbying intensifying.",
+      "detail": "H.R. 906 \u2014 4 cosponsors. Status: Introduced. Manufacturer lobbying remains the primary obstacle.",
       "issue_area": "right-to-repair"
     },
     {
@@ -20,7 +20,7 @@
       "priority": "WATCH",
       "dot": "watch",
       "headline": "NHTSA reviewing helmet standards",
-      "detail": "NHTSA proposing updated FMVSS No. 218 standards. No federal mandate proposed — monitoring for rider impact.",
+      "detail": "NHTSA proposing updated FMVSS No. 218 standards. No federal mandate proposed \u2014 monitoring for rider impact.",
       "issue_area": "helmet-laws"
     },
     {
@@ -48,7 +48,7 @@
     {
       "id": "profiling-act",
       "title": "Stop Motorcycle Profiling Act",
-      "subtitle": "Federal — S.1424 / H.R.2843",
+      "subtitle": "Federal \u2014 S.1424 / H.R.2843",
       "status": "QUIET",
       "priority": "MONITOR",
       "dot": "quiet",
@@ -73,11 +73,11 @@
     "items": [
       {
         "bill": "REPAIR Act (H.R. 906)",
-        "update": "Gained 12 new cosponsors — now at 67 total. Manufacturer lobby spending up $2.1M this quarter."
+        "update": "Gained 12 new cosponsors \u2014 now at 67 total. Manufacturer lobby spending up $2.1M this quarter."
       },
       {
         "bill": "Texas Lane Filtering (HB 1927)",
-        "update": "Passed House Transportation Committee 8–3. Heading to full House vote."
+        "update": "Passed House Transportation Committee 8\u20133. Heading to full House vote."
       },
       {
         "bill": "Ohio Universal Helmet Repeal",
