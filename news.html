@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>News Feed — Easyriders Rider Rights Intelligence Center</title>
+  <title>News Feed â€” Easyriders Rider Rights Intelligence Center</title>
   <style>
     :root {
       --black: #0A0A0A; --card-bg: #141414; --card-border: #222222;
@@ -79,6 +79,7 @@
     <a href="motorcycle-rights.html">Motorcycle Rights</a>
     <a href="right-to-repair.html">Right to Repair</a>
     <a href="helmet-laws.html">Helmet Laws</a>
+    <a href="lawmakers.html">Lawmakers</a>
     <a href="organizations.html">Organizations</a>
     <a href="news.html" class="active">News Feed</a>
     <a href="about.html">About</a>
@@ -97,7 +98,7 @@
     <div class="rule"></div>
     <span class="count" id="news-count"></span>
   </div>
-  <p class="update-note" id="update-note">Updated daily at 6am ET via automated feed. Last verified: loading…</p>
+  <p class="update-note" id="update-note">Updated daily at 6am ET via automated feed. Last verified: loadingâ€¦</p>
   <div class="filter-bar">
     <label>Filter:</label>
     <button class="filter-btn active" onclick="filterNews('all', this)">All Stories</button>
@@ -106,7 +107,7 @@
     <button class="filter-btn" onclick="filterNews('helmet-laws', this)">Helmet Laws</button>
   </div>
   <div id="news-feed">
-    <div style="color:var(--muted);font-family:'Arial',sans-serif;">Loading news feed…</div>
+    <div style="color:var(--muted);font-family:'Arial',sans-serif;">Loading news feedâ€¦</div>
   </div>
 </main>
 
@@ -157,9 +158,9 @@
         ${a.briefing ? `
         <div class="briefing-box">
           <div class="b-label">Rider Briefing</div>
-          <div class="briefing-row"><strong>IMPACT</strong> — ${a.briefing.impact}</div>
-          <div class="briefing-row"><strong>TIMELINE</strong> — ${a.briefing.timeline}</div>
-          <div class="briefing-row"><strong>ACTION</strong> — ${a.briefing.action}</div>
+          <div class="briefing-row"><strong>IMPACT</strong> â€” ${a.briefing.impact}</div>
+          <div class="briefing-row"><strong>TIMELINE</strong> â€” ${a.briefing.timeline}</div>
+          <div class="briefing-row"><strong>ACTION</strong> â€” ${a.briefing.action}</div>
         </div>` : ''}
       </div>
     `).join('');
@@ -176,3 +177,4 @@
 
 </body>
 </html>
+

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -22,7 +22,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: var(--black); color: var(--cream); font-family: 'Georgia', serif; line-height: 1.5; }
 
-    /* ── HEADER ── */
+    /* â”€â”€ HEADER â”€â”€ */
     header {
       background: #0A0A0A;
       border-bottom: 2px solid var(--orange);
@@ -88,7 +88,7 @@
       border-bottom-color: var(--orange);
     }
 
-    /* ── HERO METRICS ── */
+    /* â”€â”€ HERO METRICS â”€â”€ */
     .hero {
       background: linear-gradient(180deg, #1A0A00 0%, #0A0A0A 100%);
       border-bottom: 1px solid var(--card-border);
@@ -156,10 +156,10 @@
       letter-spacing: 0.05em;
     }
 
-    /* ── MAIN LAYOUT ── */
+    /* â”€â”€ MAIN LAYOUT â”€â”€ */
     main { max-width: 1400px; margin: 0 auto; padding: 2rem; }
 
-    /* ── SECTION HEADERS ── */
+    /* â”€â”€ SECTION HEADERS â”€â”€ */
     .section-header {
       display: flex;
       align-items: baseline;
@@ -184,7 +184,7 @@
       font-family: 'Arial', sans-serif;
     }
 
-    /* ── SIGNAL CARDS ── */
+    /* â”€â”€ SIGNAL CARDS â”€â”€ */
     .signals-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -251,7 +251,7 @@
       font-family: 'Arial', sans-serif;
     }
 
-    /* ── WEEK IN REVIEW ── */
+    /* â”€â”€ WEEK IN REVIEW â”€â”€ */
     .week-review {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -289,7 +289,7 @@
     .wir-bill { font-size: 0.78rem; color: var(--orange); font-family: 'Arial', sans-serif; font-weight: bold; }
     .wir-update { font-size: 0.78rem; color: var(--muted); font-family: 'Arial', sans-serif; }
 
-    /* ── NEWS FEED ── */
+    /* â”€â”€ NEWS FEED â”€â”€ */
     .news-layout { display: grid; grid-template-columns: 1fr 320px; gap: 2rem; margin-bottom: 2.5rem; }
     @media (max-width: 900px) { .news-layout { grid-template-columns: 1fr; } }
 
@@ -347,7 +347,7 @@
     .briefing-row { margin-bottom: 0.35rem; font-size: 0.75rem; font-family: 'Arial', sans-serif; color: var(--muted); }
     .briefing-row strong { color: var(--cream); }
 
-    /* ── SIDEBAR ── */
+    /* â”€â”€ SIDEBAR â”€â”€ */
     .sidebar { display: flex; flex-direction: column; gap: 1rem; }
     .sidebar-card {
       background: var(--card-bg);
@@ -421,7 +421,7 @@
       color: var(--black);
     }
 
-    /* ── FOOTER ── */
+    /* â”€â”€ FOOTER â”€â”€ */
     footer {
       border-top: 1px solid var(--card-border);
       padding: 2.5rem 2rem;
@@ -472,13 +472,13 @@
     }
     .footer-bottom .hpai span { color: var(--orange); }
 
-    /* ── ANIMATIONS ── */
+    /* â”€â”€ ANIMATIONS â”€â”€ */
     @keyframes pulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.4; }
     }
 
-    /* ── LOADING STATE ── */
+    /* â”€â”€ LOADING STATE â”€â”€ */
     .loading { color: var(--muted); font-size: 0.8rem; font-family: 'Arial', sans-serif; padding: 1rem 0; }
     .error-msg { color: var(--red-alert); font-size: 0.8rem; font-family: 'Arial', sans-serif; padding: 1rem 0; }
   </style>
@@ -501,6 +501,7 @@
     <a href="motorcycle-rights.html">Motorcycle Rights</a>
     <a href="right-to-repair.html">Right to Repair</a>
     <a href="helmet-laws.html">Helmet Laws</a>
+    <a href="lawmakers.html">Lawmakers</a>
     <a href="organizations.html">Organizations</a>
     <a href="news.html">News Feed</a>
     <a href="about.html">About</a>
@@ -537,10 +538,10 @@
   <div class="section-header">
     <h2>Policy Signal Panel</h2>
     <div class="rule"></div>
-    <span class="count" id="signal-count">Loading…</span>
+    <span class="count" id="signal-count">Loadingâ€¦</span>
   </div>
   <div class="signals-grid" id="signals-grid">
-    <div class="loading">Loading signals…</div>
+    <div class="loading">Loading signalsâ€¦</div>
   </div>
 
   <!-- WEEK IN REVIEW -->
@@ -551,11 +552,11 @@
   </div>
   <div class="week-review">
     <div class="wir-header">
-      <span class="wir-count" id="wir-badge">—</span>
+      <span class="wir-count" id="wir-badge">â€”</span>
       <h3>Key Developments This Week</h3>
     </div>
     <div class="wir-items" id="wir-items">
-      <div class="loading">Loading…</div>
+      <div class="loading">Loadingâ€¦</div>
     </div>
   </div>
 
@@ -573,7 +574,7 @@
   </div>
   <div class="news-layout">
     <div class="news-feed" id="news-feed">
-      <div class="loading">Loading news…</div>
+      <div class="loading">Loading newsâ€¦</div>
     </div>
     <div class="sidebar">
       <div class="sidebar-card">
@@ -592,18 +593,18 @@
             <span class="helmet-count none">3 states</span>
           </div>
         </div>
-        <a href="helmet-laws.html" class="helmet-cta">View Full 50-State Map →</a>
+        <a href="helmet-laws.html" class="helmet-cta">View Full 50-State Map â†’</a>
       </div>
       <div class="sidebar-card">
         <h4>Key Organizations</h4>
         <div class="org-item">
           <div class="org-name">American Motorcyclist Association</div>
-          <div class="org-abbr">AMA — amacycle.org</div>
+          <div class="org-abbr">AMA â€” amacycle.org</div>
           <div class="org-focus">Federal + state legislation, rider rights advocacy</div>
         </div>
         <div class="org-item">
           <div class="org-name">Motorcycle Riders Foundation</div>
-          <div class="org-abbr">MRF — mrf.org</div>
+          <div class="org-abbr">MRF â€” mrf.org</div>
           <div class="org-focus">Federal lobbying, profiling, lane filtering</div>
         </div>
         <div class="org-item">
@@ -611,14 +612,15 @@
           <div class="org-abbr">State chapters nationwide</div>
           <div class="org-focus">Helmet choice, state-level advocacy, rider education</div>
         </div>
-        <a href="organizations.html" class="helmet-cta">All Organizations →</a>
+        <a href="lawmakers.html">Lawmakers</a>
+    <a href="organizations.html" class="helmet-cta">All Organizations â†’</a>
       </div>
       <div class="sidebar-card">
         <h4>Take Action</h4>
         <p style="font-size:0.78rem; color:var(--muted); font-family:'Arial',sans-serif; line-height:1.7; margin-bottom:0.8rem;">
           Find your federal and state representatives and let them know you're watching their votes on rider rights.
         </p>
-        <a href="https://www.house.gov/representatives/find-your-representative" target="_blank" class="helmet-cta">Find Your Rep →</a>
+        <a href="https://www.house.gov/representatives/find-your-representative" target="_blank" class="helmet-cta">Find Your Rep â†’</a>
       </div>
     </div>
   </div>
@@ -639,7 +641,8 @@
     </div>
     <div class="footer-col">
       <h4>Resources</h4>
-      <a href="organizations.html">Organizations</a>
+      <a href="lawmakers.html">Lawmakers</a>
+    <a href="organizations.html">Organizations</a>
       <a href="news.html">News Feed</a>
       <a href="about.html">About This Program</a>
     </div>
@@ -748,9 +751,9 @@
         ${a.briefing ? `
         <div class="briefing-box">
           <div class="b-label">Rider Briefing</div>
-          <div class="briefing-row"><strong>IMPACT</strong> — ${a.briefing.impact}</div>
-          <div class="briefing-row"><strong>TIMELINE</strong> — ${a.briefing.timeline}</div>
-          <div class="briefing-row"><strong>ACTION</strong> — ${a.briefing.action}</div>
+          <div class="briefing-row"><strong>IMPACT</strong> â€” ${a.briefing.impact}</div>
+          <div class="briefing-row"><strong>TIMELINE</strong> â€” ${a.briefing.timeline}</div>
+          <div class="briefing-row"><strong>ACTION</strong> â€” ${a.briefing.action}</div>
         </div>` : ''}
       </div>
     `).join('');
@@ -769,3 +772,4 @@
 
 </body>
 </html>
+

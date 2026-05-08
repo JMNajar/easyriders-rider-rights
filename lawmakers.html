@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lawmakers — Easyriders Rider Rights Intelligence Center</title>
+  <style>
+    :root {
+      --black: #0A0A0A; --card-bg: #141414; --card-border: #222222;
+      --orange: #FF6600; --orange-dim: #CC5200; --cream: #F5EDD8;
+      --gold: #E8A020; --red-alert: #CC2200; --white: #FFFFFF;
+      --muted: #888888; --muted-dim: #555555; --active-green: #22CC66;
+      --pro-bg: #001A08; --pro-border: #22CC66;
+      --watch-bg: #1A1000; --watch-border: #E8A020;
+      --oppose-bg: #1A0000; --oppose-border: #CC2200;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--black); color: var(--cream); font-family: 'Georgia', serif; line-height: 1.5; }
+    header { background: #0A0A0A; border-bottom: 2px solid var(--orange); padding: 0 2rem; }
+    .header-top { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0 0.5rem; }
+    .site-title .label { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--orange); text-transform: uppercase; font-family: 'Arial', sans-serif; }
+    .site-title h1 { font-size: 1.5rem; color: var(--white); font-weight: bold; }
+    .site-title h1 span { color: var(--orange); }
+    .header-badge { display: flex; align-items: center; gap: 0.5rem; background: #1A0A00; border: 1px solid var(--orange-dim); border-radius: 4px; padding: 0.4rem 0.8rem; }
+    .header-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--active-green); animation: pulse 2s infinite; }
+    .header-badge span { font-size: 0.7rem; letter-spacing: 0.12em; color: var(--orange); text-transform: uppercase; font-family: 'Arial', sans-serif; }
+    nav { display: flex; gap: 0; overflow-x: auto; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; font-family: 'Arial', sans-serif; padding: 0.6rem 1rem; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
+    nav a:hover, nav a.active { color: var(--orange); border-bottom-color: var(--orange); }
+    .page-hero { background: linear-gradient(180deg, #1A0A00 0%, #0A0A0A 100%); border-bottom: 1px solid var(--card-border); padding: 2rem; }
+    .page-hero .breadcrumb { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-family: 'Arial', sans-serif; margin-bottom: 0.5rem; }
+    .page-hero .breadcrumb span { color: var(--orange); }
+    .page-hero h2 { font-size: 1.5rem; color: var(--white); margin-bottom: 0.4rem; }
+    .page-hero p { font-size: 0.85rem; color: var(--muted); font-family: 'Arial', sans-serif; max-width: 700px; }
+    main { max-width: 1300px; margin: 0 auto; padding: 2rem; }
+    .section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1rem; margin-top: 2rem; }
+    .section-header h2 { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); font-family: 'Arial', sans-serif; }
+    .section-header .rule { flex: 1; height: 1px; background: var(--card-border); }
+    .section-header .count { font-size: 0.7rem; color: var(--muted); font-family: 'Arial', sans-serif; }
+
+    /* FILTER BAR */
+    .filter-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; align-items: center; }
+    .filter-bar label { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted-dim); font-family: 'Arial', sans-serif; }
+    .filter-btn { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 3px; padding: 0.3rem 0.7rem; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-family: 'Arial', sans-serif; cursor: pointer; transition: all 0.15s; }
+    .filter-btn:hover, .filter-btn.active { background: var(--orange); border-color: var(--orange); color: var(--black); }
+    .filter-divider { width: 1px; height: 20px; background: var(--card-border); margin: 0 0.3rem; }
+
+    /* STAT STRIP */
+    .stat-strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 6px; padding: 1rem; text-align: center; }
+    .stat-card .num { font-size: 2rem; font-weight: bold; color: var(--orange); line-height: 1; }
+    .stat-card .lbl { font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-family: 'Arial', sans-serif; margin-top: 0.3rem; }
+
+    /* LAWMAKERS GRID */
+    .lawmakers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.2rem; margin-bottom: 2.5rem; }
+
+    /* LAWMAKER CARD */
+    .lawmaker-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 6px; overflow: hidden; transition: border-color 0.2s; }
+    .lawmaker-card:hover { border-color: var(--orange-dim); }
+    .lawmaker-card.pro { border-top: 3px solid var(--active-green); }
+    .lawmaker-card.watch { border-top: 3px solid var(--gold); }
+    .lawmaker-card.oppose { border-top: 3px solid var(--red-alert); }
+
+    .card-photo-row { display: flex; gap: 1rem; align-items: flex-start; padding: 1.2rem 1.2rem 0.8rem; }
+    .lawmaker-photo { width: 64px; height: 80px; object-fit: cover; border-radius: 4px; background: #222; flex-shrink: 0; }
+    .lawmaker-photo-placeholder { width: 64px; height: 80px; border-radius: 4px; background: #1A1A1A; border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: bold; color: var(--muted-dim); font-family: 'Arial', sans-serif; flex-shrink: 0; }
+    .card-identity { flex: 1; }
+    .lawmaker-name { font-size: 0.95rem; color: var(--white); font-weight: bold; line-height: 1.3; margin-bottom: 0.3rem; }
+    .lawmaker-meta { font-size: 0.72rem; color: var(--muted); font-family: 'Arial', sans-serif; margin-bottom: 0.4rem; }
+    .party-badge { display: inline-block; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.65rem; font-weight: bold; letter-spacing: 0.06em; font-family: 'Arial', sans-serif; }
+    .party-R { background: #2A0000; border: 1px solid #660000; color: #FF6666; }
+    .party-D { background: #00001A; border: 1px solid #000066; color: #6699FF; }
+    .party-I { background: #1A1A00; border: 1px solid #666600; color: #CCCC00; }
+    .position-label { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Arial', sans-serif; margin-top: 0.4rem; }
+    .position-label.pro { color: var(--active-green); }
+    .position-label.watch { color: var(--gold); }
+    .position-label.oppose { color: var(--red-alert); }
+    .position-label.sponsor { color: var(--orange); }
+    .position-label.committee { color: var(--gold); }
+
+    .rider-score-badge { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.2rem 0.6rem; border-radius: 3px; font-size: 0.65rem; font-weight: bold; letter-spacing: 0.08em; text-transform: uppercase; font-family: 'Arial', sans-serif; }
+    .rider-score-badge.PRO { background: var(--pro-bg); border: 1px solid var(--pro-border); color: var(--active-green); }
+    .rider-score-badge.WATCH { background: var(--watch-bg); border: 1px solid var(--watch-border); color: var(--gold); }
+    .rider-score-badge.OPPOSE { background: var(--oppose-bg); border: 1px solid var(--oppose-border); color: var(--red-alert); }
+
+    .card-body { padding: 0 1.2rem 1.2rem; }
+    .card-summary { font-size: 0.77rem; color: var(--muted); font-family: 'Arial', sans-serif; line-height: 1.7; margin-bottom: 0.8rem; }
+    .card-bills { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.8rem; }
+    .card-bill { font-size: 0.72rem; font-family: 'Arial', sans-serif; color: var(--orange-dim); }
+    .card-bill::before { content: '▶ '; font-size: 0.55rem; }
+    .card-committees { font-size: 0.7rem; color: var(--muted-dim); font-family: 'Arial', sans-serif; }
+
+    .flag-row { margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px solid var(--card-border); }
+    .flag-item { font-size: 0.7rem; font-family: 'Arial', sans-serif; color: var(--red-alert); padding: 0.2rem 0; }
+    .flag-item::before { content: '⚑ '; }
+
+    /* INDUSTRY INFLUENCE TABLE */
+    .influence-table-wrap { overflow-x: auto; margin-bottom: 2rem; }
+    table { width: 100%; border-collapse: collapse; font-family: 'Arial', sans-serif; }
+    th { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--orange); background: var(--card-bg); padding: 0.7rem 1rem; text-align: left; border-bottom: 2px solid var(--orange-dim); }
+    td { font-size: 0.78rem; color: var(--cream); padding: 0.8rem 1rem; border-bottom: 1px solid var(--card-border); vertical-align: top; }
+    tr:hover td { background: #1A1A1A; }
+    .pos-badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 3px; font-size: 0.65rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: bold; white-space: nowrap; }
+    .pos-badge.support { background: var(--pro-bg); border: 1px solid var(--pro-border); color: var(--active-green); }
+    .pos-badge.oppose { background: var(--oppose-bg); border: 1px solid var(--oppose-border); color: var(--red-alert); }
+    .pos-badge.mixed { background: var(--watch-bg); border: 1px solid var(--watch-border); color: var(--gold); }
+    td .industry-name { font-weight: bold; color: var(--white); }
+    td .industry-examples { font-size: 0.7rem; color: var(--muted); margin-top: 0.2rem; }
+    td .signal { font-size: 0.72rem; color: var(--muted); font-style: italic; }
+
+    /* EXPLAINER */
+    .explainer { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 6px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .explainer h3 { font-size: 1rem; color: var(--white); margin-bottom: 0.8rem; }
+    .explainer p { font-size: 0.82rem; color: var(--muted); font-family: 'Arial', sans-serif; line-height: 1.8; }
+
+    footer { border-top: 1px solid var(--card-border); padding: 2rem; text-align: center; }
+    footer p { font-size: 0.72rem; color: var(--muted-dim); font-family: 'Arial', sans-serif; }
+    footer .hpai { color: var(--muted); }
+    footer .hpai span { color: var(--orange); }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="site-title">
+      <span class="label">Easyriders Magazine</span>
+      <h1><span>Rider Rights</span> Intelligence Center</h1>
+    </div>
+    <div class="header-badge">
+      <div class="dot"></div>
+      <span>Live Intelligence</span>
+    </div>
+  </div>
+  <nav>
+    <a href="index.html">Dashboard</a>
+    <a href="motorcycle-rights.html">Motorcycle Rights</a>
+    <a href="right-to-repair.html">Right to Repair</a>
+    <a href="helmet-laws.html">Helmet Laws</a>
+    <a href="lawmakers.html" class="active">Lawmakers</a>
+    <a href="organizations.html">Organizations</a>
+    <a href="news.html">News Feed</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <div class="breadcrumb">Rider Rights Intelligence / <span>Lawmakers</span></div>
+  <h2>Rider Rights Lawmakers — 119th Congress</h2>
+  <p>Tracking the federal legislators who sponsor, advance, block, or ignore the bills that define your rights as an American motorcyclist. Know who is in your corner, who is sitting on the fence, and who is taking money from the industries fighting against you.</p>
+</div>
+
+<main>
+
+  <div class="section-header" style="margin-top:0;">
+    <h2>At a Glance</h2>
+    <div class="rule"></div>
+  </div>
+  <div class="stat-strip" id="stat-strip">
+    <div class="stat-card"><div class="num" id="stat-total">—</div><div class="lbl">Tracked</div></div>
+    <div class="stat-card"><div class="num" id="stat-sponsors">—</div><div class="lbl">Bill Sponsors</div></div>
+    <div class="stat-card"><div class="num" id="stat-committee">—</div><div class="lbl">Key Committee Members</div></div>
+    <div class="stat-card"><div class="num" id="stat-opposition">—</div><div class="lbl">Opposition Watch</div></div>
+  </div>
+
+  <div class="section-header">
+    <h2>Bill Sponsors &amp; Key Legislators</h2>
+    <div class="rule"></div>
+    <span class="count" id="lawmaker-count"></span>
+  </div>
+
+  <div class="filter-bar">
+    <label>Filter:</label>
+    <button class="filter-btn active" onclick="filterLawmakers('all', this)">All</button>
+    <button class="filter-btn" onclick="filterLawmakers('sponsor', this)">Bill Sponsors</button>
+    <button class="filter-btn" onclick="filterLawmakers('committee', this)">Committee</button>
+    <button class="filter-btn" onclick="filterLawmakers('opposition', this)">Opposition Watch</button>
+    <div class="filter-divider"></div>
+    <button class="filter-btn" onclick="filterParty('all', this)">All Parties</button>
+    <button class="filter-btn" onclick="filterParty('R', this)">Republican</button>
+    <button class="filter-btn" onclick="filterParty('D', this)">Democrat</button>
+    <div class="filter-divider"></div>
+    <button class="filter-btn" onclick="filterChamber('all', this)">All Chambers</button>
+    <button class="filter-btn" onclick="filterChamber('House', this)">House</button>
+    <button class="filter-btn" onclick="filterChamber('Senate', this)">Senate</button>
+  </div>
+
+  <div class="lawmakers-grid" id="lawmakers-grid">
+    <div style="color:var(--muted);font-family:'Arial',sans-serif;">Loading lawmakers…</div>
+  </div>
+
+  <div class="section-header">
+    <h2>Industry Influence Matrix</h2>
+    <div class="rule"></div>
+  </div>
+  <div class="explainer">
+    <h3>Who's Lobbying Congress on Rider Rights — and Why</h3>
+    <p>Follow the money. The industries below have documented financial interests in the outcome of rider rights legislation. Knowing who funds your representatives helps you understand why bills stall, who schedules hearings, and who doesn't.</p>
+  </div>
+  <div class="influence-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Industry</th>
+          <th>Position</th>
+          <th>Why They Care</th>
+          <th>Rider Signal</th>
+        </tr>
+      </thead>
+      <tbody id="influence-tbody">
+        <tr><td colspan="4" style="color:var(--muted);">Loading…</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<footer>
+  <p>Easyriders Rider Rights Intelligence Center | Lawmaker data from Congress.gov, FEC.gov, AMA. Updated weekly. Conflict flags based on documented FEC filings.</p>
+  <p class="hpai">Built by <span>Horsepower AI</span> | Jeffrey Najar</p>
+</footer>
+
+<script>
+  let allLawmakers = [];
+  let activeTypeFilter = 'all';
+  let activePartyFilter = 'all';
+  let activeChamberFilter = 'all';
+
+  function scoreClass(score) {
+    if (score === 'PRO') return 'pro';
+    if (score === 'OPPOSE') return 'oppose';
+    return 'watch';
+  }
+
+  function positionClass(type) {
+    if (type === 'sponsor') return 'sponsor';
+    if (type === 'opposition') return 'oppose';
+    return 'committee';
+  }
+
+  function renderCard(l) {
+    const sc = scoreClass(l.rider_score);
+    const photoUrl = l.photo;
+    const bills = l.bills.length
+      ? `<div class="card-bills">${l.bills.map(b => `<div class="card-bill">${b.title}</div>`).join('')}</div>`
+      : '';
+    const flags = l.industry_flags && l.industry_flags.length
+      ? `<div class="flag-row">${l.industry_flags.map(f => `<div class="flag-item">${f}</div>`).join('')}</div>`
+      : '';
+    const committees = l.committees.length
+      ? `<div class="card-committees">${l.committees.join(' &middot; ')}</div>`
+      : '';
+
+    return `
+      <div class="lawmaker-card ${sc}" data-type="${l.position_type}" data-party="${l.party}" data-chamber="${l.chamber}">
+        <div class="card-photo-row">
+          <img class="lawmaker-photo" src="${photoUrl}" alt="${l.name}"
+               onerror="this.outerHTML='<div class=\\'lawmaker-photo-placeholder\\'>${l.first[0]}${l.last[0]}</div>'">
+          <div class="card-identity">
+            <div class="lawmaker-name">${l.name}</div>
+            <div class="lawmaker-meta">
+              <span class="party-badge party-${l.party}">${l.party}</span>
+              &nbsp;${l.chamber} &middot; ${l.state}${l.district ? ' &middot; ' + l.district : ''}
+            </div>
+            <div class="position-label ${positionClass(l.position_type)}">${l.position_label}</div>
+            <div style="margin-top:0.5rem;">
+              <span class="rider-score-badge ${l.rider_score}">${l.rider_score === 'PRO' ? '✓ PRO RIDER' : l.rider_score === 'OPPOSE' ? '✗ OPPOSITION' : '⚠ WATCH'}</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-summary">${l.summary}</div>
+          ${bills}
+          ${committees}
+          ${flags}
+        </div>
+      </div>
+    `;
+  }
+
+  function applyFilters() {
+    const filtered = allLawmakers.filter(l => {
+      const typeOk = activeTypeFilter === 'all' || l.position_type === activeTypeFilter;
+      const partyOk = activePartyFilter === 'all' || l.party === activePartyFilter;
+      const chamberOk = activeChamberFilter === 'all' || l.chamber === activeChamberFilter;
+      return typeOk && partyOk && chamberOk;
+    });
+    document.getElementById('lawmaker-count').textContent = `${filtered.length} legislators`;
+    document.getElementById('lawmakers-grid').innerHTML =
+      filtered.length ? filtered.map(renderCard).join('') : '<div style="color:var(--muted);font-family:Arial,sans-serif;">No legislators match this filter.</div>';
+  }
+
+  function filterLawmakers(type, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => {
+      if (['all','sponsor','committee','opposition'].some(t => b.textContent.toLowerCase().includes(t === 'all' ? 'all' : t))) {
+        // handled below
+      }
+    });
+    activeTypeFilter = type;
+    applyFilters();
+  }
+
+  function filterParty(party, btn) {
+    activePartyFilter = party;
+    applyFilters();
+  }
+
+  function filterChamber(chamber, btn) {
+    activeChamberFilter = chamber;
+    applyFilters();
+  }
+
+  // Simplified filter button active state management
+  document.addEventListener('click', function(e) {
+    const btn = e.target;
+    if (!btn.classList.contains('filter-btn')) return;
+    const text = btn.textContent.trim();
+    // Determine which group this button belongs to and deactivate siblings in same group
+    const typeTexts = ['All', 'Bill Sponsors', 'Committee', 'Opposition Watch'];
+    const partyTexts = ['All Parties', 'Republican', 'Democrat'];
+    const chamberTexts = ['All Chambers', 'House', 'Senate'];
+    let group = null;
+    if (typeTexts.includes(text)) group = typeTexts;
+    if (partyTexts.includes(text)) group = partyTexts;
+    if (chamberTexts.includes(text)) group = chamberTexts;
+    if (!group) return;
+    document.querySelectorAll('.filter-btn').forEach(b => {
+      if (group.includes(b.textContent.trim())) b.classList.remove('active');
+    });
+    btn.classList.add('active');
+  });
+
+  async function loadLawmakers() {
+    try {
+      const res = await fetch('data/lawmakers.json');
+      const data = await res.json();
+      allLawmakers = data.lawmakers;
+
+      document.getElementById('stat-total').textContent = data.summary.total_tracked;
+      document.getElementById('stat-sponsors').textContent = data.summary.sponsors;
+      document.getElementById('stat-committee').textContent = data.summary.committee_members;
+      document.getElementById('stat-opposition').textContent = data.summary.opposition_watch;
+
+      applyFilters();
+
+      // Industry influence table
+      const tbody = document.getElementById('influence-tbody');
+      tbody.innerHTML = data.industry_influence.map(ind => {
+        const posClass = ind.position.toLowerCase().includes('oppose') ? 'oppose'
+                       : ind.position.toLowerCase().includes('support') ? 'support' : 'mixed';
+        return `
+          <tr>
+            <td>
+              <div class="industry-name">${ind.industry}</div>
+              <div class="industry-examples">${ind.examples}</div>
+            </td>
+            <td><span class="pos-badge ${posClass}">${ind.position}</span></td>
+            <td style="color:var(--muted);font-size:0.77rem;">${ind.motivation}</td>
+            <td><span class="signal">${ind.rider_signal}</span></td>
+          </tr>
+        `;
+      }).join('');
+
+    } catch(e) {
+      document.getElementById('lawmakers-grid').innerHTML = '<div style="color:var(--muted-dim);font-family:Arial,sans-serif;">Lawmaker data unavailable.</div>';
+    }
+  }
+
+  loadLawmakers();
+</script>
+
+</body>
+</html>
