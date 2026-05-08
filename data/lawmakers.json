@@ -19,6 +19,7 @@
       "position_label": "REPAIR Act Sponsor",
       "position_type": "sponsor",
       "photo": "https://bioguide.congress.gov/bioguide/photo/D/D000628.jpg",
+      "contact_url": "https://dunn.house.gov/contact",
       "bills": [
         {"id": "HR906", "title": "REPAIR Act", "url": "https://congress.gov/bill/119th-congress/house-bill/906"}
       ],
@@ -40,6 +41,7 @@
       "position_label": "Profiling Act Sponsor",
       "position_type": "sponsor",
       "photo": "https://bioguide.congress.gov/bioguide/photo/C/C000127.jpg",
+      "contact_url": "https://www.cantwell.senate.gov/contact",
       "bills": [
         {"id": "S1424", "title": "Stop Motorcycle Profiling Act", "url": "https://congress.gov/bill/119th-congress/senate-bill/1424"}
       ],
@@ -61,6 +63,7 @@
       "position_label": "Profiling Act Sponsor",
       "position_type": "sponsor",
       "photo": "https://bioguide.congress.gov/bioguide/photo/S/S000510.jpg",
+      "contact_url": "https://adamsmith.house.gov/contact",
       "bills": [
         {"id": "HR2843", "title": "Stop Motorcycle Profiling Act (House)", "url": "https://congress.gov/bill/119th-congress/house-bill/2843"}
       ],
@@ -82,6 +85,7 @@
       "position_label": "Right to Repair Champion",
       "position_type": "sponsor",
       "photo": "https://bioguide.congress.gov/bioguide/photo/G/G000598.jpg",
+      "contact_url": "https://gluesenkamp-perez.house.gov/contact",
       "bills": [
         {"id": "HR906", "title": "REPAIR Act — Cosponsor", "url": "https://congress.gov/bill/119th-congress/house-bill/906"}
       ],
@@ -103,6 +107,7 @@
       "position_label": "Energy & Commerce Chair",
       "position_type": "committee",
       "photo": "https://bioguide.congress.gov/bioguide/photo/G/G000558.jpg",
+      "contact_url": "https://guthrie.house.gov/contact",
       "bills": [],
       "committees": ["House Energy & Commerce — Chair"],
       "rider_score": "WATCH",
@@ -122,6 +127,7 @@
       "position_label": "Energy & Commerce Ranking Member",
       "position_type": "committee",
       "photo": "https://bioguide.congress.gov/bioguide/photo/P/P000034.jpg",
+      "contact_url": "https://pallone.house.gov/contact",
       "bills": [],
       "committees": ["House Energy & Commerce — Ranking Member"],
       "rider_score": "PRO",
@@ -141,6 +147,7 @@
       "position_label": "Senate Commerce Chair",
       "position_type": "committee",
       "photo": "https://bioguide.congress.gov/bioguide/photo/C/C001098.jpg",
+      "contact_url": "https://www.cruz.senate.gov/contact",
       "bills": [],
       "committees": ["Senate Commerce, Science & Transportation — Chair"],
       "rider_score": "WATCH",
@@ -160,6 +167,7 @@
       "position_label": "Senate Judiciary Member",
       "position_type": "committee",
       "photo": "https://bioguide.congress.gov/bioguide/photo/C/C001056.jpg",
+      "contact_url": "https://www.cornyn.senate.gov/contact",
       "bills": [],
       "committees": ["Senate Judiciary Committee"],
       "rider_score": "WATCH",
@@ -179,6 +187,7 @@
       "position_label": "REPAIR Act Cosponsor",
       "position_type": "sponsor",
       "photo": "https://bioguide.congress.gov/bioguide/photo/L/L000566.jpg",
+      "contact_url": "https://latta.house.gov/contact",
       "bills": [
         {"id": "HR906", "title": "REPAIR Act — Cosponsor", "url": "https://congress.gov/bill/119th-congress/house-bill/906"}
       ],
@@ -200,6 +209,7 @@
       "position_label": "REPAIR Act Cosponsor",
       "position_type": "sponsor",
       "photo": "https://bioguide.congress.gov/bioguide/photo/D/D000617.jpg",
+      "contact_url": "https://delbene.house.gov/contact",
       "bills": [
         {"id": "HR906", "title": "REPAIR Act — Cosponsor", "url": "https://congress.gov/bill/119th-congress/house-bill/906"}
       ],
@@ -221,6 +231,7 @@
       "position_label": "Opposition Watch",
       "position_type": "opposition",
       "photo": "https://bioguide.congress.gov/bioguide/photo/M/M001157.jpg",
+      "contact_url": "https://mccaul.house.gov/contact",
       "bills": [],
       "committees": ["House Foreign Affairs"],
       "rider_score": "OPPOSE",
@@ -240,6 +251,7 @@
       "position_label": "Opposition Watch",
       "position_type": "opposition",
       "photo": "https://bioguide.congress.gov/bioguide/photo/B/B001303.jpg",
+      "contact_url": "https://bluntrochester.senate.gov/contact",
       "bills": [],
       "committees": ["Senate Commerce, Science & Transportation"],
       "rider_score": "OPPOSE",
