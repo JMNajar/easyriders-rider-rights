@@ -16,6 +16,7 @@
     header { background: #0A0A0A; border-bottom: 2px solid var(--orange); padding: 0 2rem; }
     .header-top { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0 0.5rem; }
     .site-title .label { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--orange); text-transform: uppercase; font-family: 'Arial', sans-serif; }
+    .easyriders-logo { height: 42px; width: auto; display: block; }
     .site-title h1 { font-size: 1.5rem; color: var(--white); font-weight: bold; }
     .site-title h1 span { color: var(--orange); }
     .header-badge { display: flex; align-items: center; gap: 0.5rem; background: #1A0A00; border: 1px solid var(--orange-dim); border-radius: 4px; padding: 0.4rem 0.8rem; }
@@ -77,6 +78,16 @@
     footer .hpai { color: var(--muted); }
     footer .hpai span { color: var(--orange); }
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .hamburger { display: none; background: none; border: 1px solid var(--orange-dim); border-radius: 4px; cursor: pointer; padding: 0.4rem 0.55rem; flex-direction: column; justify-content: center; align-items: center; }
+    .hamburger span { display: block; width: 20px; height: 2px; background: var(--orange); margin: 3px 0; }
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .header-badge { display: none; }
+      nav { display: none; flex-direction: column; }
+      nav.open { display: flex; }
+      nav a { padding: 0.85rem 1.5rem; border-bottom: 1px solid var(--card-border); }
+      nav a.active { border-bottom-color: var(--card-border); }
+    }
   </style>
 </head>
 <body>
@@ -84,13 +95,16 @@
 <header>
   <div class="header-top">
     <div class="site-title">
-      <span class="label">Easyriders Magazine</span>
+      <img src="logos/eayriders-uncaged-logo.jpg" alt="Uncaged Easyriders Magazine" class="easyriders-logo">
       <h1><span>Rider Rights</span> Intelligence Center</h1>
     </div>
     <div class="header-badge">
       <div class="dot"></div>
       <span>Live Intelligence</span>
     </div>
+    <button class="hamburger" onclick="this.closest('header').querySelector('nav').classList.toggle('open')" aria-label="Toggle navigation menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
   <nav>
     <a href="index.html">Dashboard</a>
